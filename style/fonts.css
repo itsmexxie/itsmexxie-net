@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter-VariableFont_opsz\,wght.ttf");
+}
+
+@font-face {
+  font-family: "Material Symbols";
+  font-style: normal;
+  src: url("../fonts/MaterialIcons-Regular.ttf");
+}
+
+.icon-ms {
+  font-family: "Material Symbols";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: middle;
+}
+
+.icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.icon-inline {
+  margin-right: 0.25rem;
+  vertical-align: bottom;
+}
+
+.icon-color {
+  color: var(--ctp-lavender);
+}
