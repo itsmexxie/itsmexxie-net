@@ -12,8 +12,13 @@ body {
   align-items: center;
 }
 
+#hehe {
+  position: absolute;
+  bottom: 1rem;
+}
+
 .section {
-  min-width: 50vw;
+  width: 50vw;
   min-height: 100vh;
   padding: 2rem;
   display: flex;
@@ -24,8 +29,9 @@ body {
   justify-content: center;
 }
 
-#projects ul {
-  list-style-type: disc;
+#home ul,
+#contacts ul {
+  list-style-type: none;
 }
 
 #theme-switcher {
