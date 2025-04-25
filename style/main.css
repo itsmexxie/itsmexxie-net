@@ -12,11 +12,6 @@ body {
   align-items: center;
 }
 
-#hehe {
-  position: absolute;
-  bottom: 1rem;
-}
-
 .section {
   width: 50vw;
   min-height: 100vh;
@@ -27,6 +22,12 @@ body {
 
 #home {
   justify-content: center;
+}
+
+#home .profile_photo {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
 }
 
 #home ul,
