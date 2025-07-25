@@ -1,25 +1,23 @@
-let theme = 0; // 0 - dark, 1 - light
+// let theme = 0; // 0 - dark, 1 - light
+const app = document.getElementById("app");
 
-document.addEventListener("scrollend", (event) => {
-    let closestEl;
-    let minOffset = Infinity;
+let currentEl = document.getElementById("home");
 
-    document.querySelectorAll(".section").forEach(element => {
-        let offsetTopFromBottom = element.offsetTop - (window.scrollY + window.innerHeight);
-        let offsetBottomFromTop = (element.offsetTop + element.offsetHeight) - window.scrollY;
+const observer = new IntersectionObserver(
+  (entries) => {
+    if (entries[0].isIntersecting) {
+      currentEl = entries[0].target;
+    }
+  },
+  {
+    threshold: [0.1],
+  }
+);
 
-        console.log(offsetTopFromBottom, offsetBottomFromTop);
+app.addEventListener("scrollend", (event) => {
+  app.scroll({ top: currentEl.offsetTop, left: 0, behavior: "smooth" });
+});
 
-        if (offsetTopFromBottom < 0 && Math.abs(offsetTopFromBottom) < minOffset) {
-            closestEl = element;
-            minOffset = Math.abs(offsetTopFromBottom);
-        }
-
-        if (offsetBottomFromTop > 0 && Math.abs(offsetBottomFromTop) < minOffset) {
-            closestEl = element;
-            minOffset = Math.abs(offsetBottomFromTop);
-        }
-    });
-
-    window.scrollTo({ top: closestEl.offsetTop, behavior: "smooth" });
+document.querySelectorAll(".section").forEach((element) => {
+  observer.observe(element);
 });

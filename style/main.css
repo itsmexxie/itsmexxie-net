@@ -2,7 +2,9 @@
 @import url(./catppuccin/latte.css);
 @import url(./global.css);
 
-body {
+#app {
+  width: 100vw;
+  height: 100vh;
   background: var(--ctp-base);
   color: var(--ctp-text);
   font-family: "Inter", sans-serif;
@@ -10,6 +12,7 @@ body {
   display: flex;
   flex-flow: column;
   align-items: center;
+  overflow: auto;
 }
 
 .section {
