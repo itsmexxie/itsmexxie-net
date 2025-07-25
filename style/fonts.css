@@ -9,6 +9,13 @@
   src: url("../fonts/MaterialIcons-Regular.ttf");
 }
 
+.icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  vertical-align: -0.25em;
+}
+
 .icon-ms {
   font-family: "Material Symbols";
   font-weight: normal;
@@ -21,20 +28,12 @@
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
-  vertical-align: middle;
 }
 
-.icon {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-}
-
-.icon-inline {
-  margin-right: 0.25rem;
-  vertical-align: bottom;
-}
-
-.icon-color {
+.text-primary {
   color: var(--ctp-lavender);
+}
+
+.me-2 {
+  margin-right: 0.5rem;
 }

@@ -1,20 +1,25 @@
 let theme = 0; // 0 - dark, 1 - light
 
-document.addEventListener("scrollend", () => {
+document.addEventListener("scrollend", (event) => {
     let closestEl;
-    let closestElValue = Infinity;
+    let minOffset = Infinity;
 
     document.querySelectorAll(".section").forEach(element => {
-        let currElOffset = Math.abs(element.offsetTop - window.scrollY);
-        if (closestElValue > currElOffset) {
+        let offsetTopFromBottom = element.offsetTop - (window.scrollY + window.innerHeight);
+        let offsetBottomFromTop = (element.offsetTop + element.offsetHeight) - window.scrollY;
+
+        console.log(offsetTopFromBottom, offsetBottomFromTop);
+
+        if (offsetTopFromBottom < 0 && Math.abs(offsetTopFromBottom) < minOffset) {
             closestEl = element;
-            closestElValue = currElOffset;
+            minOffset = Math.abs(offsetTopFromBottom);
+        }
+
+        if (offsetBottomFromTop > 0 && Math.abs(offsetBottomFromTop) < minOffset) {
+            closestEl = element;
+            minOffset = Math.abs(offsetBottomFromTop);
         }
     });
 
     window.scrollTo({ top: closestEl.offsetTop, behavior: "smooth" });
 });
-
-document.getElementById("theme-switcher").addEventListener("mousedown", () => {
-
-})
