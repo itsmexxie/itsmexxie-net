@@ -9,13 +9,20 @@
   color: var(--ctp-text);
   font-family: "Inter", sans-serif;
   font-size: 18px;
+
   display: flex;
   flex-flow: column;
   align-items: center;
-  overflow: auto;
+
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
 }
 
 .section {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+
   width: 50vw;
   min-height: 100vh;
   padding: 2rem;
