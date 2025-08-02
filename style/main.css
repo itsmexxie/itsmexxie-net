@@ -25,16 +25,20 @@
 
   width: 50vw;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 3rem;
   display: flex;
   flex-flow: column;
+}
+
+.section .section-header {
+  margin-bottom: 1.5rem;
 }
 
 #home {
   justify-content: center;
 }
 
-#home .profile_photo {
+#home .profile-photo {
   width: 96px;
   height: 96px;
   border-radius: 50%;
