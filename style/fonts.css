@@ -8,32 +8,3 @@
   font-style: normal;
   src: url("../fonts/MaterialIcons-Regular.ttf");
 }
-
-.icon {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  vertical-align: -0.25em;
-}
-
-.icon-ms {
-  font-family: "Material Symbols";
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px; /* Preferred icon size */
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-}
-
-.text-primary {
-  color: var(--ctp-lavender);
-}
-
-.me-2 {
-  margin-right: 0.5rem;
-}
