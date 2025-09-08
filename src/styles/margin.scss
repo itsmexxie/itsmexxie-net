@@ -1,0 +1,16 @@
+@use "sass:list";
+
+$margins: 0.25rem, 0.5rem, 1rem, 1.5rem, 3rem;
+$marginTypes: (
+  "b": "margin-bottom",
+  "s": "margin-left",
+  "e": "margin-right",
+);
+
+@each $classSuffix, $style in $marginTypes {
+  @for $i from 1 through 5 {
+    .m#{$classSuffix}-#{$i} {
+      #{$style}: list.nth($margins, $i);
+    }
+  }
+}

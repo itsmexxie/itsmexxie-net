@@ -1,0 +1,20 @@
+{
+  "name": "itsmexxie-net",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@catppuccin/palette": "^1.7.1",
+    "astro": "^5.12.8",
+    "sass": "^1.90.0"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2",
+    "prettier-plugin-astro": "0.14.1"
+  }
+}

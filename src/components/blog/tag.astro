@@ -1,0 +1,29 @@
+---
+import Chip from "../chip.astro";
+
+interface Props {
+  tagName: string,
+  postCount?: number
+}
+
+const { tagName, postCount } = Astro.props;
+---
+
+<Chip>
+  <a href={`blog/tags/${tagName}`}>
+    #{tagName}&nbsp;
+    { postCount && <span class="post-count">{postCount}</span> }
+  </a>
+</Chip>
+
+<style lang="scss">
+  @use "../../../node_modules/@catppuccin/palette/scss/latte";
+
+  a, a:hover {
+    text-decoration: none;
+  }
+
+  .post-count {
+    color: latte.$overlay1;
+  }
+</style>

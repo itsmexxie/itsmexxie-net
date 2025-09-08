@@ -1,0 +1,24 @@
+@use "../../node_modules/@catppuccin/palette/scss/latte";
+@use "./global.scss";
+@use "./margin.scss";
+@use "./icons.scss";
+
+body {
+  background: latte.$base;
+  color: latte.$text;
+
+  font-family: "Inter", sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline dotted;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.text-lavender {
+  color: latte.$lavender;
+}

@@ -1,0 +1,23 @@
+---
+
+---
+
+<div class="chip">
+  <slot />
+</div>
+
+<style lang="scss">
+  @use "../../node_modules/@catppuccin/palette/scss/latte";
+
+  .chip {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid latte.$surface0;
+    border-radius: 4px;
+
+    &:hover {
+      cursor: pointer;
+      border: 1px solid latte.$overlay0;
+      background: rgba($color: latte.$overlay2, $alpha: 0.2);
+    }
+  }
+</style>

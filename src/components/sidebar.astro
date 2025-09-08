@@ -1,0 +1,56 @@
+---
+import MdIcon from "./mdIcon.astro";
+---
+
+<div class="sidebar">
+  <ul class="sidebar-nav">
+    <li class="sidebar-nav-item">
+      <a href="/#home"><MdIcon classes={["me-2"]}>home</MdIcon>Home</a>
+    </li>
+    <li class="sidebar-nav-item">
+      <a href="/blog"><MdIcon classes={["me-2"]}>book_ribbon</MdIcon>Blog</a>
+    </li>
+    <li class="sidebar-nav-item">
+      <a href="/projects"><MdIcon classes={["me-2"]}>construction</MdIcon>Projects</a
+      >
+    </li>
+    <li class="sidebar-nav-item">
+      <a href="/#contacts"
+        ><MdIcon classes={["me-2"]}>alternate_email</MdIcon>Contacts</a
+      >
+    </li>
+    <li class="sidebar-nav-item">
+      <a href="/#homelab"><MdIcon classes={["me-2"]}>science</MdIcon>Homelab</a>
+    </li>
+  </ul>
+</div>
+
+<style lang="scss">
+  @use "../../node_modules/@catppuccin/palette/scss/latte";
+
+  .sidebar {
+    width: 300px;
+    height: 100vh;
+    padding: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    background: latte.$crust;
+    overflow: auto;
+    display: flex;
+    flex-flow: column;
+  }
+
+  .sidebar-nav {
+    list-style-type: none;
+  }
+
+  .sidebar-nav-item:hover {
+    background: rgba($color: #000000, $alpha: 0.1);
+    border-radius: 8px;
+  }
+
+  .sidebar-nav-item a {
+    display: block;
+    padding: 1rem;
+    font-weight: bold;
+  }
+</style>

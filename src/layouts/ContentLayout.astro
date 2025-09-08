@@ -1,0 +1,21 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Sidebar from "../components/sidebar.astro";
+
+const { pageTitle, activePage } = Astro.props;
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <div class="wrapper">
+    <Sidebar activePage={activePage} />
+    <div class="content-wrapper">
+      <slot></slot>
+    </div>
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  .wrapper {
+    display: flex;
+  }
+</style>

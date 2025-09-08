@@ -1,0 +1,239 @@
+---
+import MdIcon from "../components/mdIcon.astro";
+import SvgIcon from "../components/svgIcon.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout pageTitle="itsmexxie">
+  <div class="wrapper">
+    <div id="home" class="section">
+      <img
+        class="profile-photo mb-3"
+        src="/img/profile.jpg"
+        alt="Profile picture of an animated cat from a Ghibli studios movie"
+      />
+      <h1 class="mb-3">itsmexxie</h1>
+      <div class="mb-3">
+        <p>
+          Software developer by day, huge coffee and tea nerd by night.<br
+          />Currently studying at <a
+            href="https://www.mff.cuni.cz/"
+            target="_blank">MFF, UK</a
+          >. Based in Prague, Czech Republic.<br />
+          🏳️‍🌈🏳️‍⚧️
+        </p>
+      </div>
+      <div class="mb-3">
+        <div class="mb-1" style="font-style: italic;">Links:</div>
+        <ul>
+          <!-- <li>
+            <a href="blog"
+              ><MdIcon classes={["me-2"]}>book_ribbon</MdIcon>Blog</a
+            >
+          </li>
+          <li>
+            <a href="projects"
+              ><MdIcon classes={["me-2"]}>construction</MdIcon>Projects</a
+            >
+          </li> -->
+          <li>
+            <a href="#contacts"
+              ><MdIcon classes={["me-2"]}>alternate_email</MdIcon>Contacts</a
+            >
+          </li>
+          <li>
+            <a href="#homelab"
+              ><MdIcon classes={["me-2"]}>science</MdIcon>Homelab</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="contacts" class="section">
+      <h2><a href="#home">~</a>/contacts</h2>
+      <div class="mb-3">
+        <ul>
+          <li>
+            <a
+              href="https://discord.com/users/348857400863883264"
+              target="_blank"
+              ><SvgIcon colored={true} classes={["me-2"]}
+                ><use href="./icons/discord.svg#icon"></use></SvgIcon
+              >Discord</a
+            >
+          </li>
+          <li>
+            <a
+              href="javascript:;"
+              onclick="navigator.clipboard.writeText('@itsmexxie:ks.matfyz.cz')"
+            >
+              <SvgIcon colored={true} classes={["me-2"]}
+                ><use href="./icons/matrix.svg#icon"></use></SvgIcon
+              >Matrix (ks.matfyz.cz) <MdIcon>content_copy</MdIcon></a
+            >
+          </li>
+          <li>
+            <a href="https://bsky.app/profile/itsmexxie.net" target="_blank">
+              <SvgIcon colored={true} classes={["me-2"]}
+                ><use href="./icons/bluesky.svg#icon"></use></SvgIcon
+              >Bluesky
+            </a>
+          </li>
+          <li>
+            <a href="https://mastodon.social/@itsmexxie" target="_blank">
+              <SvgIcon colored={true} classes={["me-2"]}>
+                <use href="./icons/mastodon.svg#icon"></use>
+              </SvgIcon>Mastodon
+            </a>
+          </li>
+          <li>
+            <a href="mailto:site.gloomily994@passinbox.com" target="_blank">
+              <MdIcon colored={true} classes={["me-2"]}>mail</MdIcon>Email
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-3">
+        <h3 class="mb-2">Git</h3>
+        <ul>
+          <li>
+            <a href="https://github.com/itsmexxie" target="_blank">
+              <SvgIcon colored={true} classes={["me-2"]}>
+                <use href="./icons/github.svg#icon"></use>
+              </SvgIcon>GitHub
+            </a>
+          </li>
+          <li>
+            <a href="https://gitea.ks.matfyz.cz/itsmexxie" target="_blank">
+              <SvgIcon colored={true} classes={["me-2"]}>
+                <use href="./icons/forgejo.svg#icon"></use>
+              </SvgIcon>gitea.ks.matfyz.cz
+            </a>
+            <li>
+              <a href="https://git.gay/itsmexxie">
+                <SvgIcon colored={true} classes={["me-2"]}>
+                  <use href="./icons/forgejo.svg#icon"></use>
+                </SvgIcon>git.gay
+              </a>
+            </li>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-3">
+        <div class="mb-2">
+          <h3>Unused</h3>
+          <i
+            >These ones are also me, but I probably won't respond to you on
+            these, since I don't use them that often.</i
+          >
+        </div>
+        <ul>
+          <li>
+            <a href="https://www.instagram.com/itsmexxie/">
+              <SvgIcon colored={true} classes={["me-2"]}>
+                <use href="./icons/instagram.svg#icon"></use>
+              </SvgIcon>Instagram
+            </a>
+          </li>
+          <li>
+            <a href="https://www.threads.com/@itsmexxie">
+              <SvgIcon colored={true} classes={["me-2"]}>
+                <use href="./icons/threads.svg#icon"></use>
+              </SvgIcon>Threads
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="homelab" class="section">
+      <h2><a href="#home">~</a>/homelab</h2>
+      <div class="mb-3">
+        Already have access? Click <a href="https://homelab.itsmexxie.net"
+          >here</a
+        >.
+      </div>
+      <hr class="mb-3" />
+      <p class="mb-2">
+        If you're a friend and want access to my ~<i>super cool homelab</i>~,
+        reach out to me wherever (although Discord is probably the fastest way)
+        and I'll walk you through setting it up! Don't worry, it's super easy (i
+        swear).
+      </p>
+
+      <div>
+        <span><b>Includes:</b> </span>
+        <ul class="points">
+          <li>legally obtained movies and music</li>
+          <li>
+            backup solution for your photos (<i>de-google yourself!</i>)
+          </li>
+          <li>self-hosted password manager</li>
+          <li>and much more™</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  body {
+    overflow: hidden;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  .wrapper {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+
+  .section {
+    scroll-snap-align: start;
+
+    width: 50vw;
+    min-height: 100vh;
+    padding: 3rem;
+
+    display: flex;
+    flex-flow: column;
+
+    h2 {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  #home {
+    justify-content: center;
+  }
+
+  .profile-photo {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+  }
+
+  #homelab .points {
+    padding: 0 1rem;
+    list-style-type: disc;
+  }
+
+  @media screen and (max-width: 960px) {
+    .section {
+      width: 100%;
+    }
+  }
+</style>
