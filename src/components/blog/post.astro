@@ -1,0 +1,75 @@
+---
+import type { PostFrontmatter } from "../../types";
+
+interface Props extends PostFrontmatter {
+  url: string;
+}
+
+const { title, description, dates, tags, url } = Astro.props;
+---
+
+<div class="card post">
+  <a href={url}>
+    <div class="mb-3">
+      <h3>{title}</h3>
+      <div class="desc">{description}</div>
+    </div>
+    <div class="meta">
+      <div class="tags">
+        {(tags ?? []).map((tag) => <span class="tag">#{tag}</span>)}
+      </div>
+      <span class="date">{dates.edited ?? dates.publish}</span>
+    </div>
+  </a>
+</div>
+
+<style lang="scss">
+  @use "../../../node_modules/@catppuccin/palette/scss/latte";
+
+  .post {
+    margin-bottom: 1rem;
+    transition-duration: 0.2s;
+    border-radius: 8px;
+
+    &:hover {
+      border: 1px solid var(--ctp-lavender);
+
+      .title {
+        text-decoration: underline;
+      }
+    }
+
+    & > a {
+      display: block;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+    }
+
+    .title {
+      margin-bottom: 0.25rem;
+      text-decoration: underline dotted;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .desc {
+      font-style: italic;
+    }
+
+    .meta {
+      display: flex;
+      color: var(--ctp-subtext0);
+
+      .tag {
+        margin-right: 4px;
+      }
+
+      .date {
+        margin-left: auto;
+        text-align: right;
+        font-style: italic;
+      }
+    }
+  }
+</style>

@@ -1,0 +1,9 @@
+---
+interface Props {
+  colored?: boolean,
+  classes?: (string | {[className: string]: any})[]
+}
+
+const { colored = false, classes = [] } = Astro.props;
+---
+<span class:list={["icon", "material-symbols-outlined", { "text-lavender": colored }, classes]}><slot></slot></span>

@@ -1,0 +1,74 @@
+---
+import MdIcon from "../../components/icon/mdIcon.astro";
+import ContentLayout from "../../layouts/ContentLayout.astro";
+import SectionLayout from "../../layouts/SectionLayout.astro";
+
+interface Album {
+  title: string,
+  author: string,
+  cover?: string
+}
+
+const albums = [
+  {
+    title: "Songs for the Deaf",
+    author: "Queens of the Stone Age",
+    cover:
+      "https://coverartarchive.org/release/2622f72c-73ae-4a8c-b533-c1d995d260e8/30995859727-250.jpg",
+  },
+  {
+    title: "Panopticon",
+    author: "ISIS",
+    cover: "https://coverartarchive.org/release/85dafbab-f6a8-46b3-a7c7-2807d1963ed1/12261328893-250.jpg"
+  }
+].sort((a, b) => a.title.localeCompare(b.title));
+---
+
+<SectionLayout activePage="music" pageTitle="Music">
+  <div class="mb-3">
+    <a href="/music">
+      <MdIcon classes={["me-2"]}>arrow_back</MdIcon>Go back
+    </a>
+  </div>
+  <h1 class="mb-3">Favorite albums</h1>
+  <div class="mb-3">Very WIP...</div>
+  <div class="albums">
+    {
+      albums.map((a) => (
+        <div class="card album">
+          <img src={a.cover} class="cover" />
+          <div>
+            <div class="name">{a.title}</div>
+            <div class="author">{a.author}</div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</SectionLayout>
+
+<style>
+  .albums {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* display: flex; */
+    /* flex-flow: column; */
+    gap: 0.5rem;
+  }
+
+  .album {
+    display: flex;
+    flex-flow: row;
+    padding: 0.25rem;
+
+    .cover {
+      height: 50px;
+      margin-right: 0.5rem;
+      border-radius: 8px;
+    }
+
+    .author {
+      font-style: italic;
+    }
+  }
+</style>

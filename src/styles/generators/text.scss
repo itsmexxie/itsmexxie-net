@@ -1,0 +1,9 @@
+$colors:
+  rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal,
+  sky, sapphire, blue, lavender;
+
+@each $color in $colors {
+  .text-#{$color} {
+    color: var(--ctp-#{$color});
+  }
+}

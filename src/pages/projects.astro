@@ -1,7 +1,18 @@
 ---
-import ContentLayout from "../layouts/ContentLayout.astro";
+import SectionLayout from "../layouts/SectionLayout.astro";
 ---
 
-<ContentLayout pageTitle="Projects">
+<SectionLayout pageTitle="Projects" activePage="projects">
+  <h1 class="mb-3">Projects</h1>
+  <h2 class="mb-2">Other</h2>
+  <ul>
+    <li><a href="/coffee">Coffee diary</a> - <i>diary of coffees that I have tried and my very personal opinions about them.</i></li>
+    <li><a href="/tea">Tea diary</a> - <i>same as above, but for tea.</i></li>
+  </ul>
+</SectionLayout>
 
-</ContentLayout>
+<style lang="scss">
+  ul {
+    padding-left: 1rem;
+  }
+</style>

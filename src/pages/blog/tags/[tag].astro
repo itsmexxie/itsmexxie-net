@@ -1,0 +1,57 @@
+---
+import type { GetStaticPaths } from "astro";
+import Post from "../../../components/blog/post.astro";
+import SectionLayout from "../../../layouts/SectionLayout.astro";
+import type { PostFrontmatter } from "../../../types";
+
+const { tag } = Astro.params;
+
+interface Post {
+  frontmatter: PostFrontmatter;
+  url: string;
+}
+
+const posts: Post[] = Object.values(
+  import.meta.glob("../../blog/posts/**/*.md", { eager: true })
+)
+  .map((p) => p as Post)
+  .filter((post) => post.frontmatter.tags?.includes(tag));
+
+export const getStaticPaths = (() => {
+  const tags: Set<string> = new Set();
+
+  for (const post of Object.values(
+    import.meta.glob("../../**/*.md", { eager: true })
+  ).map((p) => p as Post)) {
+    for (const tag of post.frontmatter.tags ?? []) {
+      tags.add(tag);
+    }
+  }
+
+  console.log(tags);
+  return tags
+    .values()
+    .map((tag) => {
+      return { params: { tag } };
+    })
+    .toArray();
+}) satisfies GetStaticPaths;
+---
+
+<SectionLayout pageTitle="Blog" activePage="blog">
+  <h1 class="mb-3">Blog</h1>
+  <h2 class="mb-2">#{tag}</h2>
+  <div>
+    {
+      posts.map((post) => (
+        <Post
+          title={post.frontmatter.title}
+          description={post.frontmatter.description}
+          dates={post.frontmatter.dates}
+          tags={post.frontmatter.tags}
+          url={post.url}
+        />
+      ))
+    }
+  </div>
+</SectionLayout>

@@ -1,24 +1,26 @@
-@use "../../node_modules/@catppuccin/palette/scss/latte";
 @use "./global.scss";
-@use "./margin.scss";
+@use "./theme.scss";
+@use "./generators/margin.scss";
+@use "./generators/text.scss";
 @use "./icons.scss";
+@use "./languages.scss";
+
+html {
+  background: #000;
+}
 
 body {
-  background: latte.$base;
-  color: latte.$text;
-
+  min-height: 100vh;
+  background: var(--ctp-base);
+  color: var(--ctp-text);
   font-family: "Inter", sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: underline dotted;
-
-  &:hover {
-    text-decoration: underline;
-  }
+.card {
+  border: 1px solid var(--ctp-overlay0);
+  border-radius: 8px;
 }
 
-.text-lavender {
-  color: latte.$lavender;
+.hr {
+  border-left: 1px solid var(--ctp-text);
 }

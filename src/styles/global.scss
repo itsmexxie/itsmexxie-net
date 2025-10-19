@@ -3,9 +3,7 @@
 }
 
 html,
-body,
-p,
-ul {
+body {
   margin: 0;
   padding: 0;
 }
@@ -16,9 +14,23 @@ ul {
   }
 }
 
+p {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline dotted;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 hr {
   margin: 0;
   height: 1px;
   border: none;
-  background: #000;
+  background: var(--ctp-text);
 }

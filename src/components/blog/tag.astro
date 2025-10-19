@@ -10,7 +10,7 @@ const { tagName, postCount } = Astro.props;
 ---
 
 <Chip>
-  <a href={`blog/tags/${tagName}`}>
+  <a href={`/blog/tags/${tagName}`}>
     #{tagName}&nbsp;
     { postCount && <span class="post-count">{postCount}</span> }
   </a>
@@ -24,6 +24,6 @@ const { tagName, postCount } = Astro.props;
   }
 
   .post-count {
-    color: latte.$overlay1;
+    color: var(--ctp-subtext0);
   }
 </style>

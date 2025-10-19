@@ -1,5 +1,5 @@
 ---
-import MdIcon from "./mdIcon.astro";
+import MdIcon from "./icon/mdIcon.astro";
 ---
 
 <div class="sidebar">
@@ -26,14 +26,12 @@ import MdIcon from "./mdIcon.astro";
 </div>
 
 <style lang="scss">
-  @use "../../node_modules/@catppuccin/palette/scss/latte";
-
   .sidebar {
     width: 300px;
     height: 100vh;
     padding: 1rem;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    background: latte.$crust;
+    background: var(--ctp-crust);
     overflow: auto;
     display: flex;
     flex-flow: column;

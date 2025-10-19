@@ -1,21 +1,47 @@
 ---
+/**
+ * Content layout which includes a navbar and some styling around content (padding, etc.).
+ * Layouts which currently extend this layout:
+ * - SectionLayout
+ * - PostLayout
+ */
+
 import BaseLayout from "./BaseLayout.astro";
-import Sidebar from "../components/sidebar.astro";
+import Navbar from "../components/navbar.astro";
+
+interface Props {
+  pageTitle?: string,
+  activePage?: string,
+}
 
 const { pageTitle, activePage } = Astro.props;
 ---
 
 <BaseLayout pageTitle={pageTitle}>
   <div class="wrapper">
-    <Sidebar activePage={activePage} />
+    <Navbar activePage={activePage} />
     <div class="content-wrapper">
       <slot></slot>
     </div>
+    <div>{}</div>
   </div>
 </BaseLayout>
 
 <style lang="scss">
   .wrapper {
     display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  .content-wrapper {
+    padding: 2rem;
+    width: 50vw;
+  }
+
+  @media screen and (max-width: 992px) {
+    .content-wrapper {
+      width: 100%;
+    }
   }
 </style>

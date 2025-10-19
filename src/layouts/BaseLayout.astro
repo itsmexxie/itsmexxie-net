@@ -1,8 +1,12 @@
 ---
+/**
+ * Base layout used by all other layouts. Currently directly used only by the index site.
+ */
+
 import "../styles/main.scss";
 
 interface Props {
-  pageTitle: string
+  pageTitle?: string;
 }
 
 const { pageTitle } = Astro.props;
@@ -17,16 +21,80 @@ const { pageTitle } = Astro.props;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=SUSE+Mono:wght@100..800&display=swap"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=alternate_email,book_ribbon,cloud,construction,content_copy,home,mail,open_in_new,science&display=block"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=album,alternate_email,arrow_back,book_ribbon,cloud,construction,content_copy,dark_mode,home,light_mode,mail,open_in_new,science&display=block"
     />
-    <title>{ pageTitle }</title>
+    <title>{pageTitle ? pageTitle + " - " : ""} itsmexxie.net</title>
   </head>
-  <body>
-    <slot></slot>
+  <body class="theme-light hidden">
+    <slot />
+    <button type="button" id="theme-switcher"></button>
   </body>
 </html>
+
+<script>
+  let themeSwitcher = document.getElementById("theme-switcher");
+  let theme = "light";
+
+  function updateTheme(mode: "light" | "dark") {
+    document.body.classList.remove("theme-" + theme);
+
+    switch (mode) {
+      case "dark":
+        theme = "dark";
+        themeSwitcher!.innerHTML =
+          '<span class="icon material-symbols-outlined">dark_mode</span>';
+        break;
+
+      case "light":
+        theme = "light";
+        themeSwitcher!.innerHTML =
+          '<span class="icon material-symbols-outlined">light_mode</span>';
+        break;
+    }
+
+    localStorage.setItem("ITSMEXXIE_NET-THEME", theme);
+    document.body.classList.add("theme-" + theme);
+  }
+
+  themeSwitcher?.addEventListener("mousedown", () => {
+    if (theme == "light") {
+      updateTheme("dark");
+    } else {
+      updateTheme("light");
+    }
+  });
+
+  updateTheme(
+    localStorage.getItem("ITSMEXXIE_NET-THEME") == "dark" ? "dark" : "light"
+  );
+  document.body.classList.remove("hidden");
+</script>
+
+<style>
+  .hidden {
+    display: none;
+  }
+
+  #theme-switcher {
+    cursor: pointer;
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 50%;
+    background: var(--ctp-lavender);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .theme-light {
+    #theme-switcher {
+      color: #fff;
+    }
+  }
+</style>

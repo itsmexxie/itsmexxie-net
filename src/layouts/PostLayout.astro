@@ -1,0 +1,84 @@
+---
+import ContentLayout from "./ContentLayout.astro";
+import type { PostFrontmatter } from "../types";
+
+interface Props {
+  frontmatter: PostFrontmatter;
+  headings: { depth: number, slug: string, text: string }[];
+}
+
+const { frontmatter, headings } = Astro.props;
+---
+
+<ContentLayout pageTitle={frontmatter.title}>
+  <div class="mb-3">
+    <h1 class="title">{frontmatter.title}</h1>
+    <div class="desc">{frontmatter.description}</div>
+    <div class="meta mb-3">
+      {
+        frontmatter.tags ? (
+          <div class="tags">
+            {(frontmatter.tags ?? []).map((tag) => (
+              <span class="tag">#{tag}</span>
+            ))}
+          </div>
+        ) : (
+          "no tags :("
+        )
+      }
+      <div class="date">
+        {
+          frontmatter.dates.edited ? (
+            <div>last edited {frontmatter.dates.publish}</div>
+            <div>(originally published {frontmatter.dates.publish})</div>
+          ) : frontmatter.dates.publish
+        }
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="post-content">
+    <slot></slot>
+  </div>
+</ContentLayout>
+
+<style lang="scss">
+  .title {
+    margin-bottom: 0.5rem;
+  }
+
+  .desc {
+    margin-bottom: 0.5rem;
+    font-style: italic
+  }
+
+  .meta {
+    color: var(--ctp-subtext0);
+    display: flex;
+    flex-flow: column;
+
+    .tag {
+      margin-right: 4px;
+    }
+
+    .date {
+      margin-left: auto;
+      text-align: right;
+      font-style: italic;
+    }
+  }
+</style>
+
+<style is:global lang="scss">
+  .post-content {
+    @for $i from 1 through 5 {
+      h#{$i} {
+        margin: revert;
+      }
+    }
+
+    p {
+      margin: revert;
+    }
+  }
+</style>
