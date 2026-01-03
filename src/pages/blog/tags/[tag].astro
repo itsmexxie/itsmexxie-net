@@ -1,8 +1,8 @@
 ---
 import type { GetStaticPaths } from "astro";
 import Post from "../../../components/blog/post.astro";
-import SectionLayout from "../../../layouts/SectionLayout.astro";
 import type { PostFrontmatter } from "../../../types";
+import ContentLayout from "../../../layouts/ContentLayout.astro";
 
 const { tag } = Astro.params;
 
@@ -28,7 +28,6 @@ export const getStaticPaths = (() => {
     }
   }
 
-  console.log(tags);
   return tags
     .values()
     .map((tag) => {
@@ -38,8 +37,7 @@ export const getStaticPaths = (() => {
 }) satisfies GetStaticPaths;
 ---
 
-<SectionLayout pageTitle="Blog" activePage="blog">
-  <h1 class="mb-3">Blog</h1>
+<ContentLayout pageId="blog" pageTitle="Blog">
   <h2 class="mb-2">#{tag}</h2>
   <div>
     {
@@ -54,4 +52,4 @@ export const getStaticPaths = (() => {
       ))
     }
   </div>
-</SectionLayout>
+</ContentLayout>

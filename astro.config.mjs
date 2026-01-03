@@ -1,5 +1,23 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import remarkCallout from "@r4ai/remark-callout";
+import { defineConfig } from "astro/config";
+import rehypeKatex from "rehype-katex";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import remarkToc from "remark-toc";
 
 // https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  image: {
+    layout: "constrained",
+  },
+  markdown: {
+    remarkPlugins: [
+      [remarkGfm, {}],
+      [remarkCallout, {}],
+      [remarkToc, { heading: "Contents", maxDepth: 3 }],
+      [remarkMath, {}],
+    ],
+    rehypePlugins: [[rehypeKatex, {}]],
+  },
+});

@@ -1,0 +1,128 @@
+---
+import ContentLayout from "../layouts/ContentLayout.astro";
+
+interface Tea {
+  name: string;
+  country: string;
+  region?: string;
+  flush?: number;
+  price?: number;
+  rating: number;
+  comment?: string;
+  link?: string;
+  original_label?: string;
+}
+
+const teas: Tea[] = [
+  {
+    name: "Dejoo",
+    country: "in",
+    region: "Assam",
+    price: 0,
+    rating: 3,
+    comment: "Standard black tea, best used for masala or other milk teas.",
+    original_label:
+      'Střední třída assámského černého čaje typu broken, plná, lehce natrpklá chuť, vhodný k běžnému popíjení s mlékem a medem či k přípravě Yogi (indického "bílého" čaje).',
+  },
+  {
+    name: "Karigane (Asanoka)",
+    country: "jp",
+    region: "Kagoshima, Kirishima",
+    flush: 0,
+    rating: 2,
+    comment: "These teas are probably not my thing...",
+    link: "https://www.caj.cz/japan-kagoshima-kirishima-shincha-asanoka~z464-000374.html",
+  },
+  {
+    name: "Sungma DJ 05/2025",
+    country: "in",
+    region: "Darjeling",
+    flush: 0,
+    price: 2,
+    rating: 4,
+    comment: "Great black tea, fresh flavor and with hints of herbs and spices."
+  }
+];
+
+const countries: { [index: string]: string[] } = {
+  in: ["India", "🇮🇳"],
+  jp: ["Japan", "🇯🇵"],
+};
+
+const flushes = ["Spring/Early", "Summer/Late"];
+const ratings = ["🚮", "Never again", "Depends on the day", "Would buy again", "Love it"]
+---
+
+<ContentLayout pageId="projects" pageTitle="Teas" fullscreen={true}>
+  <div class="mb-3">
+    <h3>Ratings legend:</h3>
+    <ul>
+      <li>⭐⭐⭐⭐⭐ - Love it</li>
+      <li>⭐⭐⭐⭐ - Would buy again</li>
+      <li>⭐⭐⭐ - Depends on the day</li>
+      <li>⭐⭐ - Never again</li>
+      <li>⭐ - 🚮</li>
+    </ul>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Country</th>
+        <th>Region</th>
+        <th>Flush</th>
+        <th>Price</th>
+        <th>Rating</th>
+        <th>Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        teas
+          .sort((a, b) => {
+            if (a.country < b.country) {
+              return -1;
+            } else if (a.country > b.country) {
+              return 1;
+            } else {
+              return 0;
+            }
+          })
+          .map((tea) => (
+            <tr>
+              <td title={tea.original_label}>
+                {tea.link ? <a href={tea.link} target="_blank">{tea.name}</a> : tea.name}
+              </td>
+              <td style="white-space: nowrap">{countries[tea.country].join(" ")}</td>
+              <td>{tea.region}</td>
+              <td>{(tea.flush === undefined) ? "-" : flushes[tea.flush]}</td>
+              <td>{tea.price ? ("💲".repeat(tea.price + 1)) : "-"}</td>
+              <td>{ratings[tea.rating]}</td>
+              <td>
+                <i>{tea.comment ?? "No comment"}</i>
+              </td>
+            </tr>
+          ))
+      }
+    </tbody>
+  </table>
+</ContentLayout>
+
+<style>
+  table,
+  th,
+  td {
+    border: 1px solid var(--ctp-overlay0);
+    border-collapse: collapse;
+  }
+
+  table {
+    width: 100%;
+    text-align: left;
+  }
+
+  th,
+  td {
+    padding: 0.5rem;
+  }
+</style>

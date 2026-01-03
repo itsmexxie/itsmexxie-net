@@ -10,7 +10,12 @@
   },
   "dependencies": {
     "@catppuccin/palette": "^1.7.1",
+    "@r4ai/remark-callout": "^0.6.2",
     "astro": "^5.12.8",
+    "rehype-katex": "^7.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0",
+    "remark-toc": "^9.0.0",
     "sass": "^1.90.0"
   },
   "devDependencies": {

@@ -2,6 +2,8 @@
 import MdIcon from "../components/icon/mdIcon.astro";
 import SvgIcon from "../components/icon/svgIcon.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+import pages from "./manifest.json";
 ---
 
 <BaseLayout>
@@ -37,32 +39,36 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <SvgIcon
               title="*grows ears and a tail, starts taking estrogen*"
               classes={["rust"]}
-              }><use href="./icons/rust.svg#icon"></use></SvgIcon
+              }><use href="./icons/languages/rust.svg#icon"></use></SvgIcon
             >
             <SvgIcon title="i hate segfaults" classes={["cpp"]}
-              ><use href="./icons/cplusplus.svg#icon"></use></SvgIcon
+              ><use href="./icons/languages/cplusplus.svg#icon"></use></SvgIcon
             >
             <SvgIcon
-              title="i don't particularly enjoy programming in this one, but I have spent the earlier years of my comp-sci journey with it and thus feel obligated to include it here"
-              classes={["js"]}
-              ><use href="./icons/javascript.svg#icon"></use></SvgIcon
-            >
-            <SvgIcon
-              title="whenever I need to write a simple one-off script, I always reach for python (mainly due to my laziness)"
-              classes={["python"]}
-              ><use href="./icons/python.svg#icon"></use></SvgIcon
+              title="I'm still learning this one, so I can't say more about it at the moment!"
+              classes={["zig"]}
+              ><use href="./icons/languages/zig.svg#icon"></use></SvgIcon
             >
           </div>
           <div class="hr"></div>
           <div>
             <SvgIcon
               title="I'm still learning this one, so I can't say more about it at the moment!"
-              classes={["go"]}><use href="./icons/go.svg#icon"></use></SvgIcon
+              classes={["go"]}
+              ><use href="./icons/languages/go.svg#icon"></use></SvgIcon
             >
+            <SvgIcon
+              title="whenever I need to write a simple one-off script, I always reach for python (mainly due to my laziness)"
+              classes={["python"]}
+              ><use href="./icons/languages/python.svg#icon"></use></SvgIcon
+            >
+          </div>
+          <div class="hr"></div>
+          <div>
             <SvgIcon
               title="I'm still learning this one, so I can't say more about it at the moment!"
               classes={["haskell"]}
-              ><use href="./icons/haskell.svg#icon"></use></SvgIcon
+              ><use href="./icons/languages/haskell.svg#icon"></use></SvgIcon
             >
           </div>
         </div>
@@ -70,37 +76,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div id="links" class="section">
         <h5 class="heading">Sections:</h5>
         <ul>
-          <li>
-            <a href="/blog"
-              ><MdIcon classes={["me-2", ""]}>book_ribbon</MdIcon
-              >Blog</a
-            >
-          </li>
-          <li>
-            <a href="/projects"
-              ><MdIcon classes={["me-2", ""]}>construction</MdIcon
-              >Projects</a
-            >
-          </li>
-          <li>
-            <a href="/music"
-              ><MdIcon classes={["me-2", ""]}>album</MdIcon
-              >Music</a
-            >
-          </li>
-          <li>
-            <a href="/contacts"
-              ><MdIcon classes={["me-2", ""]}
-                >alternate_email</MdIcon
-              >Contacts</a
-            >
-          </li>
-          <li>
-            <a href="/homelab"
-              ><MdIcon classes={["me-2", ""]}>science</MdIcon
-              >Homelab</a
-            >
-          </li>
+          {
+            pages.slice(1).map((x) => (
+              <li>
+                <a href={x.link}>
+                  <MdIcon classes={["me-2"]}>{x.icon}</MdIcon>{x.title}
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </div>
     </div>
@@ -127,6 +111,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   .content-wrapper {
     width: 50vw;
     min-height: 100vh;
+    flex-shrink: 0;
     padding: 3rem;
     justify-content: center;
     display: flex;
@@ -157,8 +142,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     gap: 1rem;
   }
 
+  #links li {
+    font-family: "SUSE Mono", sans-serif;
+  }
+
   @media screen and (max-width: 960px) {
     .content-wrapper {
+      justify-content: flex-start;
       width: 100%;
     }
   }

@@ -2,16 +2,16 @@
 import IndexLayout from "../layouts/IndexLayout.astro";
 import type { PostFrontmatter } from "../types";
 
-interface RawPost {
+interface RawNote {
   frontmatter: PostFrontmatter;
   url: string;
 }
 
-class Post {
+class Note {
   frontmatter: PostFrontmatter;
   url: string;
 
-  constructor(post: RawPost) {
+  constructor(post: RawNote) {
     this.frontmatter = post.frontmatter;
     this.url = post.url;
   }
@@ -21,10 +21,10 @@ class Post {
   }
 }
 
-const posts: Post[] = Object.values(
-  import.meta.glob("./blog/posts/**/*.md", { eager: true })
+const notes: Note[] = Object.values(
+  import.meta.glob("./notes/*.md", { eager: true })
 )
-  .map((x) => new Post(x as RawPost))
+  .map((x) => new Note(x as RawNote))
   .sort((p, q) => {
     let qDateRaw = (q.frontmatter.dates.edited ?? q.frontmatter.dates.publish)
       .split("-")
@@ -40,4 +40,9 @@ const posts: Post[] = Object.values(
   });
 ---
 
-<IndexLayout posts={posts} pageId="blog" pageTitle="Blog" />
+<IndexLayout posts={notes} pageId="notes" pageTitle="Notes">
+  <span slot="description">
+    Pokud v poznámkách narazíte na jakékoliv nesrovnalosti, napište prosím na
+    <a href="mailto:site+notes@itsmexxie.net">site+notes@itsmexxie.net</a>.</span
+  >
+</IndexLayout>

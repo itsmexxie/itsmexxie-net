@@ -1,0 +1,32 @@
+@use "sass:map";
+@use "./theme.scss";
+@use "sass:color";
+
+div[data-callout] {
+  padding: 1rem;
+
+  p {
+    margin: 0;
+  }
+
+  div[data-callout-title] {
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+}
+
+div[data-callout-type="info"] {
+  border-left: 6px solid var(--ctp-sky);
+}
+
+html:has(.theme-light) {
+  div[data-callout-type="info"] {
+    background: rgba(map.get(theme.$themes, "light", "sky"), 0.2);
+  }
+}
+
+html:has(.theme-dark) {
+  div[data-callout-type="info"] {
+    background: rgba(map.get(theme.$themes, "dark", "sky"), 0.2);
+  }
+}

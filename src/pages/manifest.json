@@ -1,0 +1,29 @@
+[
+  { "id": "home", "link": "/", "title": "Home", "icon": "home" },
+  { "id": "blog", "link": "/blog", "title": "Blog", "icon": "book_ribbon" },
+  {
+    "id": "projects",
+    "link": "/projects",
+    "title": "Projects",
+    "icon": "construction"
+  },
+  {
+    "id": "recipes",
+    "link": "/recipes",
+    "title": "Recipes",
+    "icon": "skillet"
+  },
+  {
+    "id": "notes",
+    "link": "/notes",
+    "title": "School notes",
+    "icon": "school"
+  },
+  { "id": "music", "link": "/music", "title": "Music", "icon": "album" },
+  {
+    "id": "contacts",
+    "link": "/contacts",
+    "title": "Contacts",
+    "icon": "alternate_email"
+  }
+]

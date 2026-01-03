@@ -1,16 +1,13 @@
 ---
 import ContentLayout from "../layouts/ContentLayout.astro";
-import SectionLayout from "../layouts/SectionLayout.astro";
-
 ---
 
-<SectionLayout activePage="music" pageTitle="Music">
-<h1 class="mb-3">Music</h1>
+<ContentLayout pageId="music" pageTitle="Music">
 <div>
   <ul>
     <li>
-      <a href="/music/favorites">Favorite albums</a>
+      <a href="/music/favorites">Favorite albums (data heavy!)</a>
     </li>
   </ul>
 </div>
-</SectionLayout>
+</ContentLayout>

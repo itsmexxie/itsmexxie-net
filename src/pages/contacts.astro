@@ -1,11 +1,10 @@
 ---
-import SectionLayout from "../layouts/SectionLayout.astro";
+import ContentLayout from "../layouts/ContentLayout.astro";
 import MdIcon from "../components/icon/mdIcon.astro";
 import SvgIcon from "../components/icon/svgIcon.astro";
 ---
 
-<SectionLayout activePage="contacts" pageTitle="Contacts">
-  <h1 class="mb-3">Contacts</h1>
+<ContentLayout pageId="contacts" pageTitle="Contacts">
   <div class="mb-3">
     <ul>
       <li>
@@ -39,7 +38,7 @@ import SvgIcon from "../components/icon/svgIcon.astro";
         </a>
       </li>
       <li>
-        <a href="mailto:site.gloomily994@passinbox.com" target="_blank">
+        <a href="mailto:site@itsmexxie.net" target="_blank">
           <MdIcon colored={true} classes={["me-2"]}>mail</MdIcon>Email
         </a>
       </li>
@@ -61,13 +60,6 @@ import SvgIcon from "../components/icon/svgIcon.astro";
             <use href="/icons/forgejo.svg#icon"></use>
           </SvgIcon>gitea.ks.matfyz.cz
         </a>
-        <li>
-          <a href="https://git.gay/itsmexxie">
-            <SvgIcon colored={true} classes={["me-2"]}>
-              <use href="/icons/forgejo.svg#icon"></use>
-            </SvgIcon>git.gay
-          </a>
-        </li>
       </li>
     </ul>
   </div>
@@ -107,7 +99,7 @@ import SvgIcon from "../components/icon/svgIcon.astro";
       </li>
     </ul>
   </div>
-</SectionLayout>
+</ContentLayout>
 
 <style lang="scss">
   ul {

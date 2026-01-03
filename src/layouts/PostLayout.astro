@@ -8,11 +8,11 @@ interface Props {
 }
 
 const { frontmatter, headings } = Astro.props;
+const { pathname } = Astro.url;
 ---
 
-<ContentLayout pageTitle={frontmatter.title}>
+<ContentLayout pageId={pathname.split("/")[1]} pageTitle={frontmatter.title}>
   <div class="mb-3">
-    <h1 class="title">{frontmatter.title}</h1>
     <div class="desc">{frontmatter.description}</div>
     <div class="meta mb-3">
       {
@@ -29,7 +29,7 @@ const { frontmatter, headings } = Astro.props;
       <div class="date">
         {
           frontmatter.dates.edited ? (
-            <div>last edited {frontmatter.dates.publish}</div>
+            <div>last edited {frontmatter.dates.edited}</div>
             <div>(originally published {frontmatter.dates.publish})</div>
           ) : frontmatter.dates.publish
         }
@@ -41,6 +41,26 @@ const { frontmatter, headings } = Astro.props;
     <slot></slot>
   </div>
 </ContentLayout>
+
+<script>
+  window.addEventListener("load", () => {
+    let state: {[index: string]: boolean} = {};
+    document.querySelectorAll<HTMLElement>("[data-target-answer]").forEach((btn) => {
+      btn.addEventListener("mousedown", (e) => {
+        if (!btn.dataset.targetAnswer) {
+          return;
+        }
+
+        if (!state[btn.dataset.targetAnswer]) {
+          state[btn.dataset.targetAnswer] = false;
+        }
+
+        state[btn.dataset.targetAnswer] = !state[btn.dataset.targetAnswer];
+        document.querySelectorAll<HTMLElement>(`[data-answer='${btn.dataset.targetAnswer}'`).forEach((ans) => ans.style.display = state[btn.dataset.targetAnswer] ? 'inline' : 'none');
+      });
+    });
+  });
+</script>
 
 <style lang="scss">
   .title {
@@ -80,5 +100,13 @@ const { frontmatter, headings } = Astro.props;
     p {
       margin: revert;
     }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  [data-answer] {
+    display: none;
   }
 </style>

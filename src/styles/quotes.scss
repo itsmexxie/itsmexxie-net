@@ -1,0 +1,17 @@
+blockquote {
+  padding: 2rem 0;
+  border-top: 1px solid var(--ctp-overlay0);
+  border-bottom: 1px solid var(--ctp-overlay0);
+}
+
+blockquote p {
+  margin: 0;
+}
+
+blockquote p:has(cite) {
+  float: right;
+}
+
+blockquote p:has(cite):before {
+  content:  "— ";
+}

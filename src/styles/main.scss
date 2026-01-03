@@ -4,12 +4,19 @@
 @use "./generators/text.scss";
 @use "./icons.scss";
 @use "./languages.scss";
+@use "./quotes.scss";
+@use "./callouts.scss";
 
 html {
   background: #000;
 }
 
+html:has(body.theme-light), html:has(body.theme-dark) {
+  background: var(--ctp-base);
+}
+
 body {
+  position: relative;
   min-height: 100vh;
   background: var(--ctp-base);
   color: var(--ctp-text);

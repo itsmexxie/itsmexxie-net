@@ -26,11 +26,15 @@ const { pageTitle } = Astro.props;
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=album,alternate_email,arrow_back,book_ribbon,cloud,construction,content_copy,dark_mode,home,light_mode,mail,open_in_new,science&display=block"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=album,alternate_email,arrow_back,arrow_drop_down,arrow_drop_up,book_ribbon,cloud,construction,content_copy,dark_mode,home,light_mode,mail,open_in_new,school,science,skillet&display=block"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"
+      rel="stylesheet"
     />
     <title>{pageTitle ? pageTitle + " - " : ""} itsmexxie.net</title>
   </head>
-  <body class="theme-light hidden">
+  <body class="hidden">
     <slot />
     <button type="button" id="theme-switcher"></button>
   </body>
@@ -82,7 +86,7 @@ const { pageTitle } = Astro.props;
 
   #theme-switcher {
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     bottom: 2rem;
     right: 2rem;
     padding: 1rem;

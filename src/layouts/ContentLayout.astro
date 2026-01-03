@@ -10,37 +10,48 @@ import BaseLayout from "./BaseLayout.astro";
 import Navbar from "../components/navbar.astro";
 
 interface Props {
-  pageTitle?: string,
-  activePage?: string,
+  pageId?: string;
+  pageTitle?: string;
+  fullscreen?: boolean;
 }
 
-const { pageTitle, activePage } = Astro.props;
+const { pageId, pageTitle, fullscreen: fullscreen = false } = Astro.props;
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <div class="wrapper">
-    <Navbar activePage={activePage} />
-    <div class="content-wrapper">
-      <slot></slot>
+  <Navbar activePage={pageId} />
+  <div class="content-wrapper">
+    <div class:list={["content", { "fullscreen": fullscreen }]}>
+      <slot name="before-header"></slot>
+      <h1 class="mb-3">{pageTitle}</h1>
+      <slot />
     </div>
-    <div>{}</div>
   </div>
 </BaseLayout>
 
 <style lang="scss">
-  .wrapper {
+  .content-wrapper {
+    overflow: auto;
     display: flex;
     flex-flow: column;
     align-items: center;
   }
 
-  .content-wrapper {
+  .content {
     padding: 2rem;
     width: 50vw;
+
+    &.fullscreen {
+      width: 100%;
+    }
   }
 
-  @media screen and (max-width: 992px) {
-    .content-wrapper {
+  #bottom-navbar {
+    display: none;
+  }
+
+  @media screen and (max-width: 1100px) {
+    .content {
       width: 100%;
     }
   }
