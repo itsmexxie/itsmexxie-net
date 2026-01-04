@@ -9,7 +9,9 @@ import remarkToc from "remark-toc";
 // https://astro.build/config
 export default defineConfig({
   image: {
+    responsiveStyles: true,
     layout: "constrained",
+    objectFit: "scale-down"
   },
   markdown: {
     remarkPlugins: [
