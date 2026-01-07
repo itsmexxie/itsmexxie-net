@@ -14,8 +14,64 @@ dates:
 # Intro
 Předmět je ukončen zápočtem a zkouškou. Oba se získají pomocí písemných testů. Zápočtový písemný test se skládá z první části sylabu (ER, UML, SQL), zkouška pak z druhé části (relační algebra, funkční závislosti, transakce, ...)
 
+## Sylabus
+V době mého učení na zkoušku bylo celkem složité se zorientovat, co všechno předmět obsahuje a jaké všechny přednášky jsou k dispozici (přednášky se mi kryli s jiným, pro mě důležitějším předmětem, nu což). Níže jsem se tedy rozhodla přiložit seznam, který je, alespoň dle mého bádání, kompletní a správný. Nahrávky některých přednášek byly navíc dostupné pouze ve velmi zvláštních codecích, proto pro každou přednášku naleznete i odkaz na transkódovaná videa v codecu AV1, který by vám měl každý moderní přehrávač úspěšně přehrát :).
+
+|#|Název|Slidy|Přednáška|
+|---|---|---|---|
+1|Conceptual modelling|||
+2|Logical relational data model, OCL|||
+4|SQL - definice modelu, manipulace dat|||
+5|SQL - dotazy, tvorba pohledů|||
+6|Relational algebra|||
+7|Data normalisation - functional dependencies, normal forms|||
+8|Transactions|||
+9|Multimedia retrieval|||
+10|Modern database systems|||
+11|Database data structures, optimilization|||
+
 # Relační algebra
-# Funkční závislosti
+
+# Normalizace dat
+*Motivace*: Překladem konceptuálního modelu do relačního nám mohou vzniknout relace, které nejsou normalizované. Laicky řečeno to znamená, že některé informace ohledně jejich prvků ukládáme víckrát, než je potřeba. To pak vede k zbytečně velké velikosti databáze na disku, problémům při ukládání nových, aktualizování nebo mazání již vytvořených prvků apod. Řešením je data tzv. normalizovat.
+
+![Example database which violates 3NF](ndbi025/normalisation_showcase.png)
+
+*Ukázka z prezentace*: Číslo zaměstnance je klíč, navíc pozice udává plat. Zde nastává hned několik problémů.
+1. Nic nám nebrání, abychom zaměstnanci dali jiný plat, než je normální, vzhledem k jeho pozici (ať už omylem či úmyslně...).
+2. Při editaci platů musíme aktualizovat všechny zaměstnance, kteří na dané pozici pracují.
+3. Při smazání (v tomto případě nejspíš vyhození) posledního zaměstnance s danou pozicí ztrácíme informaci o platu dané pozice.
+4. V neposlední řadě i laikovy dojde, že ukládáním platu pro každého zaměstnance plýtváme místem na disku. 
+
+Ideálně bychom tedy chtěli oddělit informaci ohledně platu pozic do separátní relace (naše původní tabulka porušuje 3NF, tudíž chceme problematickou závislost přendat do jiné relace, ale o tom později).
+
+## Funkční závislosti
+Nechť máme množinu funkčních závislostí FD pro nějakou relaci R. Funkční závislosti značíme jako $X \rightarrow Y$, což nám říká, že všechny atributy v Y závisí na X. Jinak řečeno, hodnoty atributů v X nám jednoznačně určují hodnoty atributů v Y. Pokud si tedy zvolíme nějaké platné hodnoty X, tak máme jednoznačně definované hodnoty Y a vyhledávací prostor se nám zúží na zbylé atributy.
+
+Pokud máme $a \in A, X \rightarrow a$, pak mluvíme o elementárních funkčních závislostech (na pravé straně je pouze jeden atribut).
+
+Pokud platí ekvivalence - tedy $X \rightarrow Y \land Y \rightarrow X$, pak říkáme, že X a Y jsou funkčně ekvivalentní.
+
+### Armstrongovy axiomy
+Nechť máme R(A, FD) a $X, Y, Z \in A$. Zavedeme si následující axiomy:
+1. axiom podmnožiny - $Y \subseteq X \implies X \rightarrow Y$
+2. tranzitivita - $X \rightarrow Y \land Y \rightarrow Z \implies X \rightarrow Z$
+3. kompozice - $X \rightarrow Y \land X \rightarrow Z \implies X \rightarrow YZ$
+4. dekompozice - $X \rightarrow YZ \implies X \rightarrow Y \land X \rightarrow Z$
+
+Pomocí těchto axiomů budeme provádět další výpočty.
+
+### Atributový uzávěr
+V mnoha případech se nám hodí vědět, které všechny atributy jsou dány hodnotami pro nějaké atributy z množiny X. Těmto atributům se říká atributový uzávěr X a značí se $X^+$.
+
+Jeho výpočet je snadný. Začneme s množinou X (platí triviálně $X \rightarrow X$). Poté se podíváme, zda neexistuje nějaká taková relace, jejíž levá strana je podmnožina našeho doposud spočítaného uzávěru a pravá strana naopak není podmnožinou našeho uzávěru. Pokud nějaká taková relace existuje, přidáme její pravou stranu do našeho uzávěru. Pokud ne, tak máme výsledný uzávěr a výpočet ukončíme.
+
+*Příklad*: Nechť máme množinu $FD = \{a \rightarrow b, bc \rightarrow d, bd \rightarrow a\}$. Chceme spočítat uzávěr nad {b,c}. Začneme tedy se samotným {b,c} a aplikujeme iteraci našeho algoritmu. Zjistíme, že $bc \rightarrow d$. Přidáme tedy d do našeho uzávěru a pokračujeme. Použijeme $bd \rightarrow a$ ($\{bd\} \subseteq \{bcd\}$) a přidáme a. Zbývá nám poslední nepoužítá závislost, kterou však nevyužijeme, jelikož b je podmnožina našeho uzávěru. Nemáme jak pokračovat, a tak výpočet ukončíme. Výsledný uzávěr je tedy $\{a,b\}^+ = \{a,b,c,d\}$
+
+### Cover
+Množina všech funkčních závislostí, které lze z naší původní množiny závislostí odvodit pomocí Armstrongových axiomů, se nazývá cover (česky prokrytí, ale moc se nepoužívá). Značíme ji $F^+$. Velikost množiny všech možných závislostí na naší relaci je exponenciální (obecně $2^{|A|}$, včetně prázdné množiny).
+
+V některých případech se nám hodí odpověď na otázku, zda závislost patří do $F^+$. V takovém případě můžeme spočítat $F^+$ a jednodušše se podívat, zda patří. Spočítat takové pokrytí je však náročné a hlavně zbytečné, protože nám stačí zjistit, zda $Y \in X^+$. Platí tedy, že $\{X \rightarrow Y\} \in F^+ \iff Y \in X^+$
 
 ## Normálové formy
 ### První normálová forma (1NF)
@@ -51,7 +107,52 @@ Stejná, jako 3NF, akorát bez poslední podmínky. Zbylých dvou se nejde zbavi
 ![Ukázka relace nesplňující Boyce-Codd normálovou formu](ndbi025/bcnf.png)
 
 # Transakce
+Transakce v kontextu databázových systémů jsou nějaké posloupnosti operací, které klientský kód potřebuje vykonat na uložených datech (read, write, delete atd.). Nastává otázka, v jakém pořadí dané operace (a s tím i celé transakce jako takové) provést. Nejjednodušší řešení je samozřejmě jednotlivé transakce spustit *sériově* za sebou s tím, že jakákoliv permutace dané množiny transakcí je platná. (Nevede však ke stejnému výsledku! Pokud bychom měli $T_1$ a $T_2$) To je však, co se týče rychlosti, velmi neoptimální, proto bychom chtěli operace jednotlivých transakcí spustit nějak promíchaně.
+
+*Poznámka*: Bystrá duše si může povšimnout, že relativní pořadí operací jejich celkový počet nikterak neovlivní. Může se však stát, že klient mezi dvěma operacemi provadí nějakou svoji aplikační logiku, která trvá nějakou delší dobu (například čeká na uživatelův input). Pokud bychom transakce spouštěli sériově, všichni, na které se ještě nedostala řada, by museli čekat, než daná aplikace provede svoji logiku (v našem případě než daný uživatel poskytne input), a to je logicky velmi nežádoucí.
+
+![](ndbi025/schedules-types.png)
+
+## ACID
+Nejen v souvislosti s transakcemi se ve světě databázových systémů často používá zkratka ACID, která vyjadřuje základní vlastnosti, které bychom od takové databáze logicky očekávali:
+1. *Atomic* - transakce by měli být tzv. atomické, jinak řečeno by měli být považovány za jeden ucelený blok, ze kterého se buďto provedou všechny operace, nebo žádné (all or nothing).
+2 *Consistency* - stav databáze musí být platný před i po skončení transakce (např. musí dodržovat vzdálené klíče, unikátnost hodnot atributů atd.)
+3. *Isolation* - transakce by se neměli ve svém průběhu nikterak ovlivňovat, změny by měly být vidět až po commitu transakce, která je provedla.
+4. *Durability* - výsledky transakcí by měli být permanentní, nemělo by se např. stát, že výpadek elektřiny způsobí ztrátu jejich změn (jinak řečeno výsledky transakcí by se měli ukládat na disk).
+
+## Konfliktní dvojice
+Pokud operace pracují se stejnými datovými jednotkami, může dojít k tomu, že se budou navzájem ovlivňovat, což, jak jsme zmínili v předchozí části, je nežádoucí. Definují se tzv. *konfliktní dovjice*, které nám nějaký způsobem způsobojí neplechy (první a druhá operace jsou z jiných transakcí):
+- R(A) x R(A) - v pořádku
+- R(A) x W(A) - neopakovatelné čtení (Může způsobovat neplechu, pokud např. nejdříve v T1  přečteme stav nějaké účtu, v T2 převedeme peníze z onoho účtu na jiný, a pak spočítáme úroky na všech účtech a dokončíme první transakci. To nám způsobí, že úroky na prvním účtě budou vyšší, než by ve skutečnosti měly být, poněvadž má první transakce načtený stav prvního účtu před a druhého účtu po převodu.) 
+- W(A) x R(A) - čtení špinavých (neuložených) dat
+- W(A) x W(A) - přepsání špinavých dat
+
 ## Uspořádatelnost
+Uspořádatelnost (nebo také serializovatelnost) nějaké posloupnosti operací zadaných transakcí definuje, zda je konečný stav databáze po provedení operací v takovém pořádí shodný s nějakým seriovým provedení transakcí. Pokud bychom však chtěli zjistit, zda nějaké takové provedení existuje, museli bychom v nejhorším případě spočítat všechna seriová provedení, kterých je $|T|!$. Existuje proto několik odlišných definic serializovatelnosti, které se tento výpočet snaží zrychlit.
+
+### Konfliktová uspořádatelnost
+Neboli conflict-serializability. Bere v potaz množinu konfliktních dvojic, které se v daném provedení transakcí vyskytují. Pokud se množiny konfliktních párů dvou rovrhů rovnají, říkáme, že jsou *konfliktově ekvivalentní*. Pokud je rozvrh konfliktově ekvivalentní s nějakým sériovým rozvrhem, říkáme, že je *konfliktově uspořádatelný*. Alternativní definice je 
+
+Konfliktová uspořádatelnost implikuje uspořádatelnost (avšak pozor, není s ní ekvivalentní!). Nebere v potaz zrušení transakcí (abort) - rozvrh tedy nemusí být zotavitelný - ani dynamické tabulky (vkládání či mazání prvků).
+
+Konfliktová uspořádatelnost se počítá pomocí tzv. precedenčního grafu, kde vrcholy značí **potvrzené transakce** a orientované hrany konfliktní páry mezi danými transakcemi, přičemž hrana jde vždycky z té transakce, která svoji operaci pro daný pár provedla dříve. Pokud je daný graf acyklický - můžeme ho topologický uspořádat a dostat rozvrh - znamená to, že je rozvrh konfliktově uspořádaný.
+
+![Ukázka rovrhů, jeden z nich není konfliktově uspořádaný, druhý ano](ndbi025/conflict-serializability.png)
+
+### Pohledová uspořádatelnost
+Neboli view-serializability. Bere v potaz, jakou hodnotu bude mít proměnná při jejím čtení a jakou hodnotu bude mít na konci. Říká, že daný rozvrh je pohledově ekvivalentní s jiným rozvrhem, pokud:
+1. Pokud transakce čte prvotní hodnotu nějaké proměnné, musí ji číst i v druhém rozvrhu (formálně: Transakce $T_i$ čte prvotní hodnotu proměnné X v prvním rozvrhu pouze pokud ji čte i ve druhém rovzrhu.)
+2. Pokud čte operací O_i nějakou hodnotu nějaké proměnné produkovanou operací O_j, musí ji číst i v druhém rozvrhu (formálně: Operace $O_i$ v transakci $T_i$ čte hodnotu proměnné X produkovanou operací $O_j$ v transakci $T_j$ pouze pokud ji čte i v druhém rozvrhu.)
+3. Pokud daná proměnná skončí s hodnotou od stejné transakce v obou rozvrzích (formálně: Transakce $T_i$ zapisuje finální hodnotu proměnné X v prvním rozvrhu pouze pokud ji zapisuje i ve druhém rozvrhu.)
+
+Podobně jako předtím, rovrzh je pohledově serializovatelný, pokud je pohledově ekvivalentní s nějakým sériovým rozvrhem.
+
+Pohledová uspořádatelnost je ekvivalentní s uspořádatelností. Konfliktová uspořádatelnost implikuje pohledovou uspořádatelnost, ale ne naopak.
+
+![Ukázka rozvrhu, který je pohledově uspořádaný](ndbi025/view-serializability.png)
+
+## Obnovitelnost
+
 ## Protokoly
 Tento kurz se zaměřuje především na zamykací protokoly, které pro svoji funkci využívají tzv. [zámky](#zámky).
 
@@ -73,4 +174,27 @@ Databázové systémy pak v komunikaci s klienty implementují požadavek na uza
 
 Existují i striktní implementace, ve které databáze klientovi nepovolí odemykat jakékoliv zámky a všechny zámky, které si klient vyžádal, se odemknou až při ukončení transakce (ať už pozitivním, či negativním). Této implementaci se říká strict 2PL (S2PL).
 
+### Deadlock
+Deadlock je případ, ve kterém dvě a více transakcí čekají na odemknutí zdrojů, na který navzájem drží zámky, a tudíž ani jedna z transakcí nemůže pokračovat.
+ 
+# Multimedia retrieval
+## Content-based similarity search model
+Nechť máme databázi DB($f_e, \delta$), kde $f_e: DB \rightarrow U_d$ je funkce pro extrakci vlastností, která nám pro určitý záznam vrátí vektor vlastností, a $\delta: U_d \times U_d \rightarrow \mathbb{R}_o^+$ funkce, která nám pro dvojici vektoru vlastností vrátí hodnotu, která udává, jak moc jsou si dané vektory podobné.
 
+Vektor vlastností je velmi obecná věc. Můžeme například chtít, aby jedna dimenze vektoru odpovídala tomu, zda se v obrázku nachází nějaká osoba. Náš systém pro detektování osob (předpoklad je tedy ten, že takovým systémem disponujeme), nám pak vrátí číslo mezi 0 a 1, které říká, jak moc si je systém jistý, že se v daném obrázku nějaká osoba nachází.
+
+Tento systém podobnostních funkcí se pak většinou využívá pro vyhledávání pomocí referenčních obrázků, kdy se daný referenční obrázek srovná s obrázky v databázi, které se následně seřadí podle výsledné podobnosti. 
+
+# Modern database systems
+## No-SQL
+Termín obecně používaný pro databázové systémy, které nepoužívají systém relací, jinak řečeno nepoužívají schéma. Obecně platí, že se tím lépe horizontálně škálují.
+
+### Key-value store
+Nejjednodušší No-SQL systém. Jedná se v podstatě o HashMapu, kde na jedné straně máme klíče a na druhé hodnoty. Většina systému pak implementuje základní operace typu získání hodnoty (get), přidání či nahrazení hodnoty (put) a smazání hodnoty (delete). Nejčastěji jsou hodnoty skaláry (boolean, čísla, stringy, ...), některé systémy pak dovolují ukládat i strukturovanější data (např. seznamy či JSON objekty), princip dvojice [klíč, hodnota] však zůstava stejný.
+
+Mezi nejpopulárnější systémy tohoto typu patří např. [Redis](https://redis.io/).
+
+### (Wide-)Column database
+Mix key-value store a relačních databází. Definuje tabulky, ve kterých je každý řádek identifikovatelný pomocí jednoho klíče (podobně jako v key-value), avšak každý řádek může obsahovat odlišné sloupce. Obecně se však tabulky definují jako "třídy řádků", ve kterých se očekává, že budou mít až na pár vyjímek podobné sloupce (např. tabulka uživatelů).
+
+Často se používají například na sběr událostí (event logging), CMS, blogy, apod. Mezi nejpopulárnější column database systémy patří např. [Cassandra](https://cassandra.apache.org/_/index.html).
