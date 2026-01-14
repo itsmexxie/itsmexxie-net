@@ -17,18 +17,18 @@ Předmět je ukončen zápočtem a zkouškou. Oba se získají pomocí písemný
 ## Sylabus
 V době mého učení na zkoušku bylo celkem složité se zorientovat, co všechno předmět obsahuje a jaké všechny přednášky jsou k dispozici (přednášky se mi kryli s jiným, pro mě důležitějším předmětem, nu což). Níže jsem se tedy rozhodla přiložit seznam, který je, alespoň dle mého bádání, kompletní a správný. Nahrávky některých přednášek byly navíc dostupné pouze ve velmi zvláštních codecích, proto pro každou přednášku naleznete i odkaz na transkódovaná videa v codecu AV1, který by vám měl každý moderní přehrávač úspěšně přehrát :).
 
-|#|Název|Slidy|Přednáška|
+|#|Název|[Slidy](https://drive.proton.me/urls/0GKKS644TM#NcqfpfpMkBSw)|[Přednáška](https://drive.proton.me/urls/0GKKS644TM#NcqfpfpMkBSw)|
 |---|---|---|---|
-1|Conceptual modelling|||
+1|Conceptual modelling|[Proton](https://drive.proton.me/urls/WA157KRW4G#ftCUjC9f62tn)||
 2|Logical relational data model, OCL|||
-4|SQL - definice modelu, manipulace dat|||
-5|SQL - dotazy, tvorba pohledů|||
-6|Relational algebra|||
-7|Data normalisation - functional dependencies, normal forms|||
-8|Transactions|||
-9|Multimedia retrieval|||
-10|Modern database systems|||
-11|Database data structures, optimilization|||
+3|SQL - definice modelu, manipulace dat|||
+4|SQL - dotazy, tvorba pohledů|||
+5|Relational algebra|||
+6|Data normalisation - functional dependencies, normal forms|||
+7|Transactions|||
+8|Multimedia retrieval|||
+9|Modern database systems|||
+10|Database data structures, optimilization|||
 
 # Relační algebra
 
@@ -68,10 +68,30 @@ Jeho výpočet je snadný. Začneme s množinou X (platí triviálně $X \righta
 
 *Příklad*: Nechť máme množinu $FD = \{a \rightarrow b, bc \rightarrow d, bd \rightarrow a\}$. Chceme spočítat uzávěr nad {b,c}. Začneme tedy se samotným {b,c} a aplikujeme iteraci našeho algoritmu. Zjistíme, že $bc \rightarrow d$. Přidáme tedy d do našeho uzávěru a pokračujeme. Použijeme $bd \rightarrow a$ ($\{bd\} \subseteq \{bcd\}$) a přidáme a. Zbývá nám poslední nepoužítá závislost, kterou však nevyužijeme, jelikož b je podmnožina našeho uzávěru. Nemáme jak pokračovat, a tak výpočet ukončíme. Výsledný uzávěr je tedy $\{a,b\}^+ = \{a,b,c,d\}$
 
-### Cover
-Množina všech funkčních závislostí, které lze z naší původní množiny závislostí odvodit pomocí Armstrongových axiomů, se nazývá cover (česky prokrytí, ale moc se nepoužívá). Značíme ji $F^+$. Velikost množiny všech možných závislostí na naší relaci je exponenciální (obecně $2^{|A|}$, včetně prázdné množiny).
+### Uzávěr funkčních závislostí
+Množina všech funkčních závislostí, které lze z naší původní množiny závislostí odvodit pomocí Armstrongových axiomů. Značíme ji $F^+$. Velikost množiny všech možných závislostí na naší relaci je exponenciální (obecně $2^{|A|}$, včetně prázdné množiny).
 
 V některých případech se nám hodí odpověď na otázku, zda závislost patří do $F^+$. V takovém případě můžeme spočítat $F^+$ a jednodušše se podívat, zda patří. Spočítat takové pokrytí je však náročné a hlavně zbytečné, protože nám stačí zjistit, zda $Y \in X^+$. Platí tedy, že $\{X \rightarrow Y\} \in F^+ \iff Y \in X^+$
+
+### Redukce závislostí
+Někdy se může stát, že ne všechny atributy na levé straně závislosti jsou skutečně potřeba. Pokud chci zjistit, zda je nějaký atribut redundantní, jednodušše ho ze závislosti odstraním a zeptám se, zda je tato zmenšená závislost v $F^+$ (zda je pravá strana podmnožina atributového uzávěru levé strany).
+
+Tento algoritmus pak mohu použít pro redukci celé závislosti tím, že jednoduše proiteruji všechny atributy na levé straně závislosti a aplikuji na ně zmíněný algoritmus.
+
+Pokud se budu chtít zbavit redundantních závislostí, jednoduše odstraním danou závislost z mé původní množiny závislostí (řekněmě $X \rightarrow Y$) a podívám se, zda pořád existuje v $F^+$. To udělám tak, že opět spočítám atributový uzávěr levé strany. Musím si však dát pozor, abych pro výpočet nepoužila mnou odebranou závislost (pak bych logicky dostala pokaždé kladný výsledek).
+
+### Cover
+Cover (česky prokrytí, ale moc se nepoužívá) $G$ je nějaká množina funkčních závislostí na stejné relaci, jako $F$, která nám udává stejné podmínky ($F^+ = G^+$). Přitom definujeme několik typů:
+- kanonické pokrytí - obsahuje pouze elementární závislosti
+- neredundantní pokrytí - pokrytí, které neobsahuje žádné redundantní závislosti (záleží na pořadí, v jakém závislosti odstraňujeme -> existuje alespoň jedno takové pokrytí)
+
+#### Minimální pokrytí
+Minimální pokrytí nějaké množiny závislostí je takové pokrytí, které je kanonické a neobsahuje žádné redundantní závislosti. Pro jeho nalezení:
+1. rozložím funkční závislosti na elementární (takové, které na pravé straně obsahují pouze jeden atribut)
+2. **nejprve** odstraním redundantní atributy na levých stranách
+3. až poté odstraním redundantní závislosti
+
+## Klíče
 
 ## Normálové formy
 ### První normálová forma (1NF)
@@ -116,7 +136,7 @@ Transakce v kontextu databázových systémů jsou nějaké posloupnosti operac�
 ## ACID
 Nejen v souvislosti s transakcemi se ve světě databázových systémů často používá zkratka ACID, která vyjadřuje základní vlastnosti, které bychom od takové databáze logicky očekávali:
 1. *Atomic* - transakce by měli být tzv. atomické, jinak řečeno by měli být považovány za jeden ucelený blok, ze kterého se buďto provedou všechny operace, nebo žádné (all or nothing).
-2 *Consistency* - stav databáze musí být platný před i po skončení transakce (např. musí dodržovat vzdálené klíče, unikátnost hodnot atributů atd.)
+2. *Consistency* - stav databáze musí být platný před i po skončení transakce (např. musí dodržovat vzdálené klíče, unikátnost hodnot atributů atd.)
 3. *Isolation* - transakce by se neměli ve svém průběhu nikterak ovlivňovat, změny by měly být vidět až po commitu transakce, která je provedla.
 4. *Durability* - výsledky transakcí by měli být permanentní, nemělo by se např. stát, že výpadek elektřiny způsobí ztrátu jejich změn (jinak řečeno výsledky transakcí by se měli ukládat na disk).
 
@@ -152,6 +172,9 @@ Pohledová uspořádatelnost je ekvivalentní s uspořádatelností. Konfliktov�
 ![Ukázka rozvrhu, který je pohledově uspořádaný](ndbi025/view-serializability.png)
 
 ## Obnovitelnost
+U rozvrhů nás také zajímá, zda jsou tzv. obnovitelné v případě ukončení některé z transakcí. Pokud některá z transakcí čte nepotvrzená data, musí její potvrzení následovat po potvrzení čtených dat, jinak hrozí, že transakce, která data původně změnila, se ukončí, avšak druhá transakce již nepůjde vrátit zpátky, protože byla potvrzena.
+
+![](ndbi025/recoverability.png)
 
 ## Protokoly
 Tento kurz se zaměřuje především na zamykací protokoly, které pro svoji funkci využívají tzv. [zámky](#zámky).
@@ -172,10 +195,16 @@ Exkluzivní zámky tak zajišťují, že nám žádná jiná transakce nepřepí
 ### Two-phase locking (2PL)
 Databázové systémy pak v komunikaci s klienty implementují požadavek na uzamykání objektů, se kterými bude daný klient interagovat. Ve volné implementaci je však těžké zaručit, aby požadavek klient skutečně dodržel. Kvůli tomu se implementuje systém, ve kterém v okamžiku, kdy klient odemkne svůj první zámek, mu databáze už žádný další zámek nevydá. Díky tomu se transakce rozdělí na dvě fáze: uzamykací a odemykací (odtud název *two-phase locking*).
 
+2PL implikuje konfliktovou uspořádatelnost.
+
 Existují i striktní implementace, ve které databáze klientovi nepovolí odemykat jakékoliv zámky a všechny zámky, které si klient vyžádal, se odemknou až při ukončení transakce (ať už pozitivním, či negativním). Této implementaci se říká strict 2PL (S2PL).
 
 ### Deadlock
 Deadlock je případ, ve kterém dvě a více transakcí čekají na odemknutí zdrojů, na který navzájem drží zámky, a tudíž ani jedna z transakcí nemůže pokračovat.
+
+Pokud některá z transakcí trvá podezřele dlouho, databázový systém si toho může všimnout, otestovat graf závislostí a pokud v něm najde cyklus, zabít některou z transakcí na cyklu. Alternativně jde deadlockům předcházet prioritizací transakcí, např:
+- wait-die - pokud si (např.) mladší transakce vyžádá zámek, který zrovna drží starší transakce, DBS ji zabije a restartuje
+- wound-wait - pokud si (např.) starší transakce vyžadá zámek, který zrovna drží mladší transakce, zabije ji a restartuje, v opačném případě čeká na jeho uvolnění
  
 # Multimedia retrieval
 ## Content-based similarity search model
