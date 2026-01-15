@@ -9,13 +9,18 @@
 import BaseLayout from "./BaseLayout.astro";
 import Navbar from "../components/navbar.astro";
 
+import pages from "../pages/manifest.json";
+
 interface Props {
-  pageId?: string;
+  pageId: string;
   pageTitle?: string;
   fullscreen?: boolean;
 }
 
-const { pageId, pageTitle, fullscreen: fullscreen = false } = Astro.props;
+let { pageId, pageTitle, fullscreen: fullscreen = false } = Astro.props;
+if (!pageTitle) {
+  pageTitle = pageTitle ?? pages.find((p: any) => p.id == pageId)?.title ?? ""
+}
 ---
 
 <BaseLayout pageTitle={pageTitle}>

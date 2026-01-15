@@ -3,30 +3,96 @@
 @use "sass:color";
 
 div[data-callout] {
-  padding: 1rem;
+  --callout-primary: var(--ctp-sky);
 
-  p {
-    margin: 0;
-  }
+  margin-bottom: 1rem;
+  border: 1px solid var(--callout-primary);
+  border-radius: 4px;
 
   div[data-callout-title] {
-    margin-bottom: 1rem;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px dashed var(--callout-primary);
     font-weight: bold;
   }
-}
 
-div[data-callout-type="info"] {
-  border-left: 6px solid var(--ctp-sky);
+  div[data-callout-body] {
+    padding: 0.5rem 1rem;
+
+    div[data-callout] {
+      margin: 1rem 0;
+    }
+  }
 }
 
 html:has(.theme-light) {
+  div[data-callout],
   div[data-callout-type="info"] {
-    background: rgba(map.get(theme.$themes, "light", "sky"), 0.2);
+    --callout-primary: var(--ctp-sky);
+
+    div[data-callout-title] {
+      background: color.adjust(
+        color.to-space(map.get(theme.$themes, "light", "sky"), hsl),
+        $lightness: 30
+      );
+    }
+  }
+
+  div[data-callout-type="success"],
+  div[data-callout-type="prove"] {
+    --callout-primary: var(--ctp-green);
+
+    div[data-callout-title] {
+      background: color.adjust(
+        color.to-space(map.get(theme.$themes, "light", "green"), hsl),
+        $lightness: 30
+      );
+    }
+  }
+
+  div[data-callout-type="alert"] {
+    --callout-primary: var(--ctp-red);
+
+    div[data-callout-title] {
+      background: color.adjust(
+        color.to-space(map.get(theme.$themes, "light", "red"), hsl),
+        $lightness: 30
+      );
+    }
   }
 }
 
 html:has(.theme-dark) {
+  div[data-callout],
   div[data-callout-type="info"] {
-    background: rgba(map.get(theme.$themes, "dark", "sky"), 0.2);
+    div[data-callout-title] {
+      --callout-primary: var(--ctp-sky);
+
+      background: color.adjust(
+        color.to-space(map.get(theme.$themes, "dark", "sky"), hsl),
+        $lightness: 30
+      );
+    }
+  }
+
+  div[data-callout-type="success"] {
+    --callout-primary: var(--ctp-green);
+
+    div[data-callout-title] {
+      background: color.adjust(
+        color.to-space(map.get(theme.$themes, "dark", "green"), hsl),
+        $lightness: 30
+      );
+    }
+  }
+
+  div[data-callout-type="alert"] {
+    --callout-primary: var(--ctp-red);
+
+    div[data-callout-title] {
+      background: color.adjust(
+        color.to-space(map.get(theme.$themes, "dark", "red"), hsl),
+        $lightness: 30
+      );
+    }
   }
 }
