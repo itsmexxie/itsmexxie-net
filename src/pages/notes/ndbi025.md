@@ -1,7 +1,7 @@
 ---
 layout: "../../layouts/PostLayout.astro"
 description: ""
-title: "[WIP] NDBI025 - Databázové systémy"
+title: "NDBI025 - Databázové systémy"
 tags:
 - mff
 - ndmi025
@@ -19,7 +19,7 @@ V době mého učení na zkoušku bylo celkem složité se zorientovat, co všec
 
 |#|Název|[Slidy](https://drive.proton.me/urls/0GKKS644TM#NcqfpfpMkBSw)|[Přednáška](https://drive.proton.me/urls/0GKKS644TM#NcqfpfpMkBSw)|
 |---|---|---|---|
-1|Conceptual modelling|[Proton](https://drive.proton.me/urls/WA157KRW4G#ftCUjC9f62tn)||
+1|Conceptual modelling|||
 2|Logical relational data model, OCL|||
 3|SQL - definice modelu, manipulace dat|||
 4|SQL - dotazy, tvorba pohledů|||
@@ -92,6 +92,8 @@ Minimální pokrytí nějaké množiny závislostí je takové pokrytí, které 
 3. až poté odstraním redundantní závislosti
 
 ## Klíče
+> [!info]
+> Tuto sekci již nejspíš nikdy nedokončím, doporučuji se podívat na zápisky od [Víta Kološe](https://www.vitkolos.cz/node/view/notes-ipp/main/semestr5/databazove-systemy/zkouska.md) :).
 
 ## Normálové formy
 ### První normálová forma (1NF)
@@ -127,7 +129,7 @@ Stejná, jako 3NF, akorát bez poslední podmínky. Zbylých dvou se nejde zbavi
 ![Ukázka relace nesplňující Boyce-Codd normálovou formu](ndbi025/bcnf.png)
 
 # Transakce
-Transakce v kontextu databázových systémů jsou nějaké posloupnosti operací, které klientský kód potřebuje vykonat na uložených datech (read, write, delete atd.). Nastává otázka, v jakém pořadí dané operace (a s tím i celé transakce jako takové) provést. Nejjednodušší řešení je samozřejmě jednotlivé transakce spustit *sériově* za sebou s tím, že jakákoliv permutace dané množiny transakcí je platná. (Nevede však ke stejnému výsledku! Pokud bychom měli $T_1$ a $T_2$) To je však, co se týče rychlosti, velmi neoptimální, proto bychom chtěli operace jednotlivých transakcí spustit nějak promíchaně.
+Transakce v kontextu databázových systémů jsou nějaké posloupnosti operací, které klientský kód potřebuje vykonat na uložených datech (read, write, delete atd.). Nastává otázka, v jakém pořadí dané operace (a s tím i celé transakce jako takové) provést. Nejjednodušší řešení je samozřejmě jednotlivé transakce spustit *sériově* za sebou s tím, že jakákoliv permutace dané množiny transakcí je platná. (Nevede však ke stejnému výsledku!) To je však, co se týče rychlosti, velmi neoptimální, proto bychom chtěli operace jednotlivých transakcí spustit nějak promíchaně.
 
 *Poznámka*: Bystrá duše si může povšimnout, že relativní pořadí operací jejich celkový počet nikterak neovlivní. Může se však stát, že klient mezi dvěma operacemi provadí nějakou svoji aplikační logiku, která trvá nějakou delší dobu (například čeká na uživatelův input). Pokud bychom transakce spouštěli sériově, všichni, na které se ještě nedostala řada, by museli čekat, než daná aplikace provede svoji logiku (v našem případě než daný uživatel poskytne input), a to je logicky velmi nežádoucí.
 
@@ -151,7 +153,7 @@ Pokud operace pracují se stejnými datovými jednotkami, může dojít k tomu, 
 Uspořádatelnost (nebo také serializovatelnost) nějaké posloupnosti operací zadaných transakcí definuje, zda je konečný stav databáze po provedení operací v takovém pořádí shodný s nějakým seriovým provedení transakcí. Pokud bychom však chtěli zjistit, zda nějaké takové provedení existuje, museli bychom v nejhorším případě spočítat všechna seriová provedení, kterých je $|T|!$. Existuje proto několik odlišných definic serializovatelnosti, které se tento výpočet snaží zrychlit.
 
 ### Konfliktová uspořádatelnost
-Neboli conflict-serializability. Bere v potaz množinu konfliktních dvojic, které se v daném provedení transakcí vyskytují. Pokud se množiny konfliktních párů dvou rovrhů rovnají, říkáme, že jsou *konfliktově ekvivalentní*. Pokud je rozvrh konfliktově ekvivalentní s nějakým sériovým rozvrhem, říkáme, že je *konfliktově uspořádatelný*. Alternativní definice je 
+Neboli conflict-serializability. Bere v potaz množinu konfliktních dvojic, které se v daném provedení transakcí vyskytují. Pokud se množiny konfliktních párů dvou rozvrhů rovnají, říkáme, že jsou *konfliktově ekvivalentní*. Pokud je rozvrh konfliktově ekvivalentní s nějakým sériovým rozvrhem, říkáme, že je *konfliktově uspořádatelný*. 
 
 Konfliktová uspořádatelnost implikuje uspořádatelnost (avšak pozor, není s ní ekvivalentní!). Nebere v potaz zrušení transakcí (abort) - rozvrh tedy nemusí být zotavitelný - ani dynamické tabulky (vkládání či mazání prvků).
 
@@ -162,7 +164,7 @@ Konfliktová uspořádatelnost se počítá pomocí tzv. precedenčního grafu, 
 ### Pohledová uspořádatelnost
 Neboli view-serializability. Bere v potaz, jakou hodnotu bude mít proměnná při jejím čtení a jakou hodnotu bude mít na konci. Říká, že daný rozvrh je pohledově ekvivalentní s jiným rozvrhem, pokud:
 1. Pokud transakce čte prvotní hodnotu nějaké proměnné, musí ji číst i v druhém rozvrhu (formálně: Transakce $T_i$ čte prvotní hodnotu proměnné X v prvním rozvrhu pouze pokud ji čte i ve druhém rovzrhu.)
-2. Pokud čte operací O_i nějakou hodnotu nějaké proměnné produkovanou operací O_j, musí ji číst i v druhém rozvrhu (formálně: Operace $O_i$ v transakci $T_i$ čte hodnotu proměnné X produkovanou operací $O_j$ v transakci $T_j$ pouze pokud ji čte i v druhém rozvrhu.)
+2. Pokud čte operací $O_i$ nějakou hodnotu nějaké proměnné produkovanou operací $O_j$, musí ji číst i v druhém rozvrhu (formálně: Operace $O_i$ v transakci $T_i$ čte hodnotu proměnné X produkovanou operací $O_j$ v transakci $T_j$ pouze pokud ji čte i v druhém rozvrhu.)
 3. Pokud daná proměnná skončí s hodnotou od stejné transakce v obou rozvrzích (formálně: Transakce $T_i$ zapisuje finální hodnotu proměnné X v prvním rozvrhu pouze pokud ji zapisuje i ve druhém rozvrhu.)
 
 Podobně jako předtím, rovrzh je pohledově serializovatelný, pokud je pohledově ekvivalentní s nějakým sériovým rozvrhem.

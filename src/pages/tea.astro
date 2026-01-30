@@ -3,7 +3,7 @@ import ContentLayout from "../layouts/ContentLayout.astro";
 
 interface Tea {
   name: string;
-  country: string;
+  country: Country;
   region?: string;
   flush?: number;
   price?: number;
@@ -13,48 +13,89 @@ interface Tea {
   original_label?: string;
 }
 
-const teas: Tea[] = [
+enum Flush {
+  Spring,
+  Summer,
+}
+
+enum Price {
+  Low,
+  Medium,
+  High,
+}
+
+enum Country {
+  India,
+  Japan,
+}
+
+const teas: { category: string, items: Tea[] }[] = [
   {
-    name: "Dejoo",
-    country: "in",
-    region: "Assam",
-    price: 0,
-    rating: 3,
-    comment: "Standard black tea, best used for masala or other milk teas.",
-    original_label:
-      'Střední třída assámského černého čaje typu broken, plná, lehce natrpklá chuť, vhodný k běžnému popíjení s mlékem a medem či k přípravě Yogi (indického "bílého" čaje).',
+    category: "Black teas",
+    items: [
+      {
+        name: "Dejoo",
+        country: Country.India,
+        region: "Assam",
+        price: Flush.Spring,
+        rating: 2,
+        comment: "Standard black tea, best used for masala or other milk teas.",
+        original_label:
+          'Střední třída assámského černého čaje typu broken, plná, lehce natrpklá chuť, vhodný k běžnému popíjení s mlékem a medem či k přípravě Yogi (indického "bílého" čaje).',
+      },
+      {
+        name: "Sungma DJ 05/2025",
+        country: Country.India,
+        region: "Darjeeling",
+        flush: Flush.Spring,
+        price: Price.High,
+        rating: 4,
+        comment:
+          "Great black tea, fresh flavor and with hints of herbs and spices.",
+      },
+      {
+        name: "Puttabong DJ 42/2025",
+        country: Country.India,
+        region: "Darjeeling",
+        flush: Flush.Spring,
+        price: Price.High,
+        rating: 4,
+      },
+    ],
   },
   {
-    name: "Karigane (Asanoka)",
-    country: "jp",
-    region: "Kagoshima, Kirishima",
-    flush: 0,
-    rating: 2,
-    comment: "These teas are probably not my thing...",
-    link: "https://www.caj.cz/japan-kagoshima-kirishima-shincha-asanoka~z464-000374.html",
+    category: "Other teas",
+    items: [
+      {
+        name: "Karigane (Asanoka)",
+        country: Country.Japan,
+        region: "Kagoshima, Kirishima",
+        flush: Flush.Spring,
+        rating: 1,
+        comment: "These teas are probably not my thing...",
+        link: "https://www.caj.cz/japan-kagoshima-kirishima-shincha-asanoka~z464-000374.html",
+      },
+    ],
   },
-  {
-    name: "Sungma DJ 05/2025",
-    country: "in",
-    region: "Darjeling",
-    flush: 0,
-    price: 2,
-    rating: 4,
-    comment: "Great black tea, fresh flavor and with hints of herbs and spices."
-  }
 ];
 
-const countries: { [index: string]: string[] } = {
-  in: ["India", "🇮🇳"],
-  jp: ["Japan", "🇯🇵"],
-};
+const countries = {
+  [Country.India]: ["India", "🇮🇳"],
+  [Country.Japan]: ["Japan", "🇯🇵"],
+} as const;
 
 const flushes = ["Spring/Early", "Summer/Late"];
-const ratings = ["🚮", "Never again", "Depends on the day", "Would buy again", "Love it"]
+const ratings = [
+  "🚮",
+  "Probably never again",
+  "Medium, but still fine",
+  "Would buy again",
+  "Love it",
+];
 ---
 
 <ContentLayout pageId="projects" pageTitle="Teas" fullscreen={true}>
-  <div class="mb-3">
+  <div class="mb-4">
     <h3>Ratings legend:</h3>
     <ul>
       <li>⭐⭐⭐⭐⭐ - Love it</li>
@@ -64,48 +105,61 @@ const ratings = ["🚮", "Never again", "Depends on the day", "Would buy again",
       <li>⭐ - 🚮</li>
     </ul>
   </div>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Country</th>
-        <th>Region</th>
-        <th>Flush</th>
-        <th>Price</th>
-        <th>Rating</th>
-        <th>Comment</th>
-      </tr>
-    </thead>
-    <tbody>
-      {
-        teas
-          .sort((a, b) => {
-            if (a.country < b.country) {
-              return -1;
-            } else if (a.country > b.country) {
-              return 1;
-            } else {
-              return 0;
-            }
-          })
-          .map((tea) => (
+  {
+    teas.map((t) => (
+      <div class="mb-4">
+        <h3 class="mb-3">{t.category}</h3>
+        <table>
+          <thead>
             <tr>
-              <td title={tea.original_label}>
-                {tea.link ? <a href={tea.link} target="_blank">{tea.name}</a> : tea.name}
-              </td>
-              <td style="white-space: nowrap">{countries[tea.country].join(" ")}</td>
-              <td>{tea.region}</td>
-              <td>{(tea.flush === undefined) ? "-" : flushes[tea.flush]}</td>
-              <td>{tea.price ? ("💲".repeat(tea.price + 1)) : "-"}</td>
-              <td>{ratings[tea.rating]}</td>
-              <td>
-                <i>{tea.comment ?? "No comment"}</i>
-              </td>
+              <th>Name</th>
+              <th>Country</th>
+              <th>Region</th>
+              <th>Flush</th>
+              <th>Price</th>
+              <th>Rating</th>
+              <th>Comment</th>
             </tr>
-          ))
-      }
-    </tbody>
-  </table>
+          </thead>
+          <tbody>
+            {t.items
+              .sort((a, b) => {
+                if (a.country < b.country) {
+                  return -1;
+                } else if (a.country > b.country) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              })
+              .map((tea) => (
+                <tr>
+                  <td title={tea.original_label}>
+                    {tea.link ? (
+                      <a href={tea.link} target="_blank">
+                        {tea.name}
+                      </a>
+                    ) : (
+                      tea.name
+                    )}
+                  </td>
+                  <td style="white-space: nowrap">
+                    {countries[tea.country].join(" ")}
+                  </td>
+                  <td>{tea.region}</td>
+                  <td>{tea.flush === undefined ? "-" : flushes[tea.flush]}</td>
+                  <td>{tea.price ? "💲".repeat(tea.price + 1) : "-"}</td>
+                  <td>{ratings[tea.rating]}</td>
+                  <td>
+                    <i>{tea.comment ?? "No comment"}</i>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+    ))
+  }
 </ContentLayout>
 
 <style>

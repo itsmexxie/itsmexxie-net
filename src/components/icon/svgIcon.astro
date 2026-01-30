@@ -7,5 +7,4 @@ interface Props {
 
 const { classes, colored, title } = Astro.props;
 ---
-
 <svg class:list={["icon", { "text-lavender": colored }, classes]}>{ title && <title>{title}</title> }<slot /></svg>

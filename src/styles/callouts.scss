@@ -69,7 +69,7 @@ html:has(.theme-dark) {
 
       background: color.adjust(
         color.to-space(map.get(theme.$themes, "dark", "sky"), hsl),
-        $lightness: 30
+        $lightness: -40
       );
     }
   }
@@ -80,7 +80,7 @@ html:has(.theme-dark) {
     div[data-callout-title] {
       background: color.adjust(
         color.to-space(map.get(theme.$themes, "dark", "green"), hsl),
-        $lightness: 30
+        $lightness: -40
       );
     }
   }
@@ -91,7 +91,7 @@ html:has(.theme-dark) {
     div[data-callout-title] {
       background: color.adjust(
         color.to-space(map.get(theme.$themes, "dark", "red"), hsl),
-        $lightness: 30
+        $lightness: -40
       );
     }
   }

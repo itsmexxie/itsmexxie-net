@@ -1,0 +1,238 @@
+---
+import MdIcon from "../../components/icon/mdIcon.astro";
+import ContentLayout from "../../layouts/ContentLayout.astro";
+---
+
+<script>
+  const albumRootEl = document.getElementById("albums");
+  const albumIds = [
+    "fb89488a-2b1e-4008-bc7a-67840f64a646",
+    "9462ca7d-9cc3-42c0-a147-050e5cf1ce0c",
+    "e125f8bf-f998-474d-a0ee-fbeebd111bc4",
+    "5d34a5cc-83dd-4a13-ab74-923d8e24c8e2",
+    "4a39c597-6901-4c44-8a93-92d2f65ce2d8",
+    "91a6d97d-9ca3-4461-b842-059f4291c399",
+    "d8c61763-9d08-4f28-8473-af9bfe0c4a2f",
+    "2e317e39-a832-4098-a097-9e4ebf0b793a",
+    "06cd1dbe-d299-4be8-b562-ca5b451e0348",
+    "42d0ddfd-867c-4aa5-98a6-d1347aec1863",
+    "66aaa5cf-a283-4991-addb-d28924c14307",
+    "33fd9078-fef6-4d5e-aaa7-a3cfc88d6d72",
+    "5021c5f2-f578-4490-a664-f3d1ffd4e320",
+    "9a433464-d42d-49a4-b4db-7cac66ccacf0",
+    "4680b5be-177d-42a2-b4c0-35d5453b8148",
+    "cfcc2f83-b10d-43f0-b10e-32db7c2e6d46",
+    "6e577000-2801-46a3-bc7f-bb9d550738c0",
+    "98b7bffb-af02-4947-b8cd-2f17e3a0e12e",
+    "d9442134-b87f-4b5f-bac8-4c93482eeb33",
+    "1b839289-19db-488c-ab8b-4a7d3646969a",
+    "1aa1d07a-9fd5-45c1-aa35-e7b069a19c73",
+    "be99cd7a-03cf-452d-a482-a9d180446c48",
+    "08acfbf6-7bfc-4d8e-a268-1f877aca3a41",
+    "744403e5-b25c-4fc6-864c-56a8a59e141c",
+    "01c39115-fbc5-31c0-8fc0-1a48bb8e0b1e",
+    "c7858e6b-9232-4c01-a703-35e60d3f7ec3",
+    "0f8ebeb2-fa96-4382-8dd7-e64f16808646",
+    "2622f72c-73ae-4a8c-b533-c1d995d260e8",
+    "4a61b95a-600c-44f6-b3ce-17b00faf07c2",
+    "2fa2b8f0-e4ab-46e8-8ab4-91d0e1aecfad",
+    "7829c16d-6bc0-4aae-902b-e47a60e62b7a",
+    "07a14a31-000c-4f52-9823-d17d26f089de",
+    "7c65ced9-4c7c-472c-b8b4-0bf4b63b0764",
+    "21fdb341-199c-486a-8b94-dc7dbc67a8d3",
+    "cfcb4749-da88-469c-9f32-471044dfdef6",
+    "f88bd57d-1c68-436f-9b3b-7e27d5780cb4",
+    "fb41ac5f-e001-4b4e-8663-eb299dfc6932",
+    "7bc67f5e-33c2-4323-a1d6-d21e43f40d2d",
+    "9228afaf-6abb-4ecc-906f-8db837e9efb4",
+    "4a7773fa-c599-49d7-ab96-6647f34d482c",
+    "5fd728bf-f69a-4c45-b68a-4fb30898bb00",
+    "628fdac4-c96d-4be6-9236-e2acdf08e4ae",
+    "fdd7fc7e-fcbf-421b-be48-a005c2838f82",
+    "e50bf821-d992-45f4-a2fa-894d0ce2eab0",
+    "3d4be478-da6a-47c6-8156-3d348aa819d4",
+    "4e96b7ab-5c13-43b3-b456-13386515b600",
+    "e3ae6fb7-d657-456f-ba81-0d17a65b8474",
+    "6a96d116-d113-4843-b3ee-b61fa7b0ebac",
+    "a7845d54-9776-4ca2-8bef-e09f98db50bb",
+    "4c3fc39e-7df8-41a8-9e8d-d95b25646b81",
+    "cf2f8d32-baa0-4d2f-8a04-7f4e9d7ae9fe",
+    "62d2de0b-c166-4a18-aa46-50ff6cd0c001",
+    "33d4bb4e-ef18-4192-9ab6-4188b0237563",
+    "f4c9a630-ac83-4497-8c49-de649862a382",
+    "1321d46d-c682-4839-a6af-a2791289ab61",
+    "c4db85c9-0628-467f-b15a-138d10a942c2",
+    "7a1214d2-6a1e-49e7-ab89-bf50aead5ddf",
+    "d73dbe17-5320-4040-bf8c-1ab374789efe",
+    "574c980e-2a72-4fc8-80d8-b4420f583893",
+    "d9d36e93-49fb-446a-83ff-67a22c8417f5",
+    "be999f7c-9a46-47b9-bd24-fc0b917e8050",
+    "18c92489-96ef-49dc-bb18-e94e9db10716",
+    "8ad6f471-3d5a-4f7a-9582-f3c85748766d",
+    "6c48c82c-b7df-4b0b-987d-666ec8271afb",
+    "6e951c8c-38c5-47b0-b2e8-69273e1984a6",
+    "f7e6ebfc-a2d7-456f-a8a4-3db05dd080d5",
+    "e5da236a-03ff-4ec8-b051-7d9020172c7e",
+    "02f41720-962a-4746-83fe-dda72a284885",
+    "887d4548-684e-4c5b-953c-097eb2c729ee",
+    "574166b1-78c0-4061-8781-b699f1e5b575",
+    "f5335e74-e71a-400d-b8f5-b8f3bcbbfd48",
+    "35e04fd7-3547-4566-84ac-7cd250794c2b",
+    "e81664fd-7788-4a6c-902c-032f59736751",
+    "410533c0-f355-4f10-b9a2-871ba2cec532",
+    "d5bb07af-7091-4132-86b4-c1489ab24a9d",
+    "56e06865-d917-4342-af48-828eb21ff740",
+    "f2950275-2fa1-4339-9a8c-a0e5fa4a78f4",
+    "f3797c3b-92f7-4b8e-9ec9-612ccf0d7366",
+    "27556bd5-400f-4ad2-b05f-62adc13b06ac",
+    "53754f1b-5561-4079-bab0-97584ba91cca",
+    "938c1eb9-a398-490b-9cf3-8c2b5f55bffb",
+    "0463a132-b89b-4fcb-8ae4-1ebf94df1088",
+    "188fb66b-2fd9-41a7-8d81-088e20714ad1",
+    "bc8007f1-2bb3-438e-9722-2c7b70a38660",
+    "9731e1a6-a6da-4c6a-a873-c40464680dc3",
+    "a786c419-9c2b-4f4f-9f74-465298beb106",
+    "b92dd458-cdf2-4f29-8c2d-28cff9cca764",
+    "60a8a8eb-127b-4ae2-abeb-c850994f1dd6",
+    "e7e61ec9-9f7d-4235-8dfc-acc2d9b9b1b3",
+    "30702389-5c67-4438-9ea0-2351c8de0f1d",
+    "eabdab86-5317-4a77-bf39-bd632faa0ea1",
+    "d11df901-2e15-4cff-9440-6d91189daf64",
+    "6dec6309-19cb-4a84-8aa2-f693268dcada",
+    "31765b9f-e969-4257-855f-c7ea1f657b2a",
+    "94acd741-5f84-4dd7-9355-b885996af0f1",
+    "b2807172-c20a-4aed-a4f2-02c57ce03b6d",
+    "171406fd-6b47-48e7-a6b2-23826304412d",
+    "8f08277d-61fb-496b-b5cd-78ec3467e0fb",
+    "85dafbab-f6a8-46b3-a7c7-2807d1963ed1",
+    "ba8583b1-b8ff-4fef-998f-9745bb652245",
+    "87248403-028c-4892-8297-0bed36e84f62",
+    "70b1d442-17ae-4280-adbb-9c5e9b338266",
+    "fa86fb0d-9428-46ba-86ec-d8e803156b5a",
+    "aeab187f-980e-475b-86b0-f9b9384c3497",
+    "d4fd977e-f14d-4219-97e2-4c621729f11e",
+    "c7833d51-b900-4b01-acef-3b0b9c82d971",
+    "b3589168-3adc-4d59-87df-4e7c54a4eba3",
+    "96096260-8654-4e84-85e9-0f4762bd0922",
+    "4f534163-b9bd-44ef-891a-fa14d9dcf4c7",
+    "e1656e7e-c23f-48e4-894e-fe1e0d5e6707",
+    "0380808d-2211-4869-a287-cc94e0d18162",
+    "6fe7f10e-a240-4016-8d49-4b94ab7c4ff5",
+    "23003b6c-81ee-4a3b-8bb3-e824a503d0b3",
+    "cf8652f2-fe1d-4aa8-87e2-de5709762cb2",
+    "058dcfa5-4921-4055-87b0-f541eb4adb08",
+    "18638c82-5408-483b-b3f2-027a1c4cdd4f",
+    "a5b0cee4-a5e3-4ab8-9e34-6f2d59951444",
+    "e40ad272-b614-4c96-8cb0-ee178e1512cb",
+    "96d73c59-41e4-4f16-96e6-e08fcb21e668",
+    "511327d0-5c0b-47e9-b13d-d298ca3fc097",
+  ];
+
+  let queue: Promise<any> = Promise.resolve();
+
+  function loadAlbum(albumId: string, cover = true) {
+    queue = queue
+      .then(async () => {
+        const album = await (
+          await fetch(
+            `https://musicbrainz.org/ws/2/release/${albumId}?inc=artists&fmt=json`,
+            { cache: "force-cache" }
+          )
+        ).json();
+
+        (albumRootEl as HTMLElement).innerHTML += `
+        <div class="card album" data-album-id="${albumId}">
+          <div class="cover">
+            <img src="/img/disc.png"/>
+          </div>
+          <div>
+            <div class="name">${album.title}</div>
+            <div class="author">${album["artist-credit"][0].name}</div>
+          </div>
+        </div>`;
+
+        if (cover) loadCover(albumId);
+      })
+      .catch((error) => setTimeout(() => loadAlbum(albumId, cover), 1000));
+  }
+
+  function loadCover(albumId: string) {
+    (
+      document
+        .querySelector(`[data-album-id="${albumId}"]`)!
+        .querySelector(".cover img") as HTMLImageElement
+    ).src = `https://coverartarchive.org/release/${albumId}/front-250.jpg`;
+  }
+
+  async function loadAlbums(covers = true) {
+    if (!albumRootEl) return;
+
+    for (const albumId of albumIds) {
+      loadAlbum(albumId, covers);
+    }
+  }
+
+  // const dataWarningEl = document.getElementById("data-kill");
+  // if (
+  //   window.outerWidth > 1100 ||
+  //   new URLSearchParams(window.location.search).get("data") == "kill"
+  // ) {
+  //   if (dataWarningEl) dataWarningEl.style.display = "none";
+  //   await loadAlbums();
+  // } else {
+  //   await loadAlbums(false);
+  // }
+</script>
+
+<ContentLayout pageId="music" pageTitle="Favorite albums">
+  <div class="mb-3" slot="before-header">
+    <a href="/music">
+      <MdIcon classes={["me-2"]}>arrow_back</MdIcon>Go back
+    </a>
+  </div>
+  <div class="mb-3">
+    <p id="data-kill"><a href="?data=kill">Kill my data!</a></p>
+    <p>Very WIP...</p>
+  </div>
+  <div id="albums"></div>
+</ContentLayout>
+
+<style is:global>
+  #albums {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* display: flex; */
+    /* flex-flow: column; */
+    gap: 0.5rem;
+  }
+
+  .album {
+    display: flex;
+    flex-flow: row;
+    padding: 0.25rem;
+
+    .cover {
+      width: 50px;
+      height: 50px;
+      margin-right: 0.5rem;
+      background: url("/img/disc.png");
+      background-size: contain;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+      }
+    }
+
+    .author {
+      font-style: italic;
+    }
+  }
+
+  @media (max-width: 700px) {
+    #albums {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

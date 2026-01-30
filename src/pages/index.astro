@@ -4,6 +4,51 @@ import SvgIcon from "../components/icon/svgIcon.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 import pages from "./manifest.json";
+
+interface Language {
+  desc: string;
+  icon: string;
+  classes: string[];
+}
+
+const languages: Language[][] = [
+  [
+    {
+      desc: "*grows ears and a tail, starts taking estrogen*",
+      icon: "rust",
+      classes: ["rust"],
+    },
+    {
+      desc: "i hate segfaults",
+      icon: "cplusplus",
+      classes: ["cpp"],
+    },
+    {
+      desc: "I'm still learning this one, so I can't say more about it at the moment!",
+      icon: "zig",
+      classes: ["zig"],
+    },
+  ],
+  [
+    {
+      desc: "whenever I need to write a simple one-off script, I always reach for python (mainly due to my laziness)",
+      icon: "python",
+      classes: ["python"],
+    },
+    {
+      desc: "I'm still learning this one, so I can't say more about it at the moment!",
+      icon: "go",
+      classes: ["go"],
+    },
+  ],
+  [
+    {
+      desc: "I have no idea how this works, but I would be glad to talk about it with you if you're willing to teach me! :)",
+      icon: "haskell",
+      classes: ["haskell"],
+    },
+  ],
+];
 ---
 
 <BaseLayout>
@@ -12,65 +57,49 @@ import pages from "./manifest.json";
       <div>
         <img
           class="profile-photo"
-          src="/img/profile.jpg"
+          src="/img/profile_2.jpg"
           alt="Profile picture of an animated cat from a Ghibli studios movie"
         />
-        <h1>itsmexxie</h1>
+        <h1 class="mb-2">itsmexxie</h1>
+        <div><span class="pronouns">she/her</span> 🏳️‍🌈🏳️‍⚧️</div>
       </div>
       <div class="about">
         <p>
-          Welcome to my site! Here you can read all about my interests,
-          projects, thoughts and opinions (whenever I actually decide to finish
-          it and put up some content…).
+          Hi! Welcome to my site! If you ever wanted to read about my interests,
+          projects, thoughts and opinions (which I don't recommend), you'll find
+          everything here (whenever I actually decide to finish it and put up
+          some content…).
         </p>
-        <p>
-          Software developer by day, huge coffee and tea nerd by night.<br
-          />Currently studying at <a
+        <p class="mb-0">
+          Software and network engineer by day, huge coffee and tea nerd by
+          night.<br />Currently studying at <a
             href="https://www.mff.cuni.cz/"
             target="_blank">MFF, UK</a
           >. Based in Prague, Czech Republic.<br />
         </p>
-        <p class="mb-0">🏳️‍🌈🏳️‍⚧️</p>
       </div>
       <div class="section">
         <h5 class="heading">Languages:</h5>
         <div id="languages">
-          <div>
-            <SvgIcon
-              title="*grows ears and a tail, starts taking estrogen*"
-              classes={["rust"]}
-              }><use href="./icons/languages/rust.svg#icon"></use></SvgIcon
-            >
-            <SvgIcon title="i hate segfaults" classes={["cpp"]}
-              ><use href="./icons/languages/cplusplus.svg#icon"></use></SvgIcon
-            >
-            <SvgIcon
-              title="I'm still learning this one, so I can't say more about it at the moment!"
-              classes={["zig"]}
-              ><use href="./icons/languages/zig.svg#icon"></use></SvgIcon
-            >
-          </div>
-          <div class="hr"></div>
-          <div>
-            <SvgIcon
-              title="I'm still learning this one, so I can't say more about it at the moment!"
-              classes={["go"]}
-              ><use href="./icons/languages/go.svg#icon"></use></SvgIcon
-            >
-            <SvgIcon
-              title="whenever I need to write a simple one-off script, I always reach for python (mainly due to my laziness)"
-              classes={["python"]}
-              ><use href="./icons/languages/python.svg#icon"></use></SvgIcon
-            >
-          </div>
-          <div class="hr"></div>
-          <div>
-            <SvgIcon
-              title="I'm still learning this one, so I can't say more about it at the moment!"
-              classes={["haskell"]}
-              ><use href="./icons/languages/haskell.svg#icon"></use></SvgIcon
-            >
-          </div>
+          {
+            languages
+              .map((l_array) => (
+                <div style="display: flex; gap: 6px">
+                  {l_array.map((l) => (
+                    <SvgIcon title={l.desc} classes={l.classes}>
+                      <use href={`./icons/languages/${l.icon}.svg#icon`} />
+                    </SvgIcon>
+                  ))}
+                </div>
+              ))
+              .reduce((res, item) => (
+                <>
+                  {res}
+                  <div class="hr" />
+                  {item}
+                </>
+              ))
+          }
         </div>
       </div>
       <div id="links" class="section">
@@ -113,7 +142,7 @@ import pages from "./manifest.json";
     min-height: 100vh;
     flex-shrink: 0;
     padding: 3rem;
-    justify-content: center;
+
     display: flex;
     flex-flow: column;
     gap: 1.5rem;
@@ -127,9 +156,17 @@ import pages from "./manifest.json";
   }
 
   .profile-photo {
+    padding: 2px;
     width: 96px;
     height: 96px;
     border-radius: 50%;
+    border: 1px dotted var(--ctp-overlay0);
+  }
+
+  .pronouns {
+    margin-right: 0.5rem;
+    font-family: "SUSE Mono", sans-serif;
+    font-style: italic;
   }
 
   .about {
@@ -142,7 +179,7 @@ import pages from "./manifest.json";
     gap: 1rem;
   }
 
-  #links li {
+  #links li,  {
     font-family: "SUSE Mono", sans-serif;
   }
 

@@ -4,9 +4,8 @@ import MdIcon from "../components/icon/mdIcon.astro";
 import SvgIcon from "../components/icon/svgIcon.astro";
 ---
 
-<ContentLayout pageId="about">
-  <div class="mb-4">
-    <h2 class="mb-2">Contacts</h2>
+<ContentLayout pageId="contacts">
+  <div id="contacts" class="mb-4">
     <div class="mb-3">
       <ul>
         <li>
@@ -103,16 +102,58 @@ import SvgIcon from "../components/icon/svgIcon.astro";
       </ul>
     </div>
   </div>
-  <div class="mb-3">
-    <h2 class="mb-2">PGP key</h2>
+  <div>
+    <h2 class="mb-2">Cool people</h2>
+    <p>
+      These people are way more cooler and interesting than me and you should
+      definitely go check them out now! (They also have no idea that I have put
+      them here, so maybe don't go spamming them about it?)
+    </p>
+    <ul>
+      <li>
+        Greenscreener - <a href="https://grsc.cz/about/">https://grsc.cz/</a>
+      </li>
+      <li>
+        LEdoian - <a href="https://kam.mff.cuni.cz/~ledoian/"
+          >https://kam.mff.cuni.cz/~ledoian/</a
+        >
+      </li>
+      <li>
+        Káťa - <a href="https://kam.mff.cuni.cz/~katia/"
+          >https://kam.mff.cuni.cz/~katia/</a
+        >
+      </li>
+      <li>
+        Vojta Káně - <a href="https://vkane.cz/">https://vkane.cz/</a>
+      </li>
+    </ul>
+    <h5 class="mb-2">GGU.cz</h5>
+    <ul>
+      <li>
+        David Koňařík - <a href="https://dvdkon.ggu.cz/"
+          >https://dvdkon.ggu.cz/</a
+        >
+      </li>
+      <li>
+        Honza Černý - <a href="https://blackblog.cz/">https://blackblog.cz/</a>
+      </li>
+    </ul>
+    <h5>0d9e.tech</h5>
+    <ul>
+      <li>
+        Matúš Púll - <a href="https://mat.uush.cz/">https://mat.uush.cz/</a>
+      </li>
+    </ul>
   </div>
 </ContentLayout>
 
 <style lang="scss">
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
+  #contacts {
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
   }
 
   li {

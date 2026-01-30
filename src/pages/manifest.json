@@ -21,9 +21,9 @@
   },
   { "id": "music", "link": "/music", "title": "Music", "icon": "album" },
   {
-    "id": "about",
-    "link": "/about",
-    "title": "About & contacts",
+    "id": "contacts",
+    "link": "/contacts",
+    "title": "Contacts",
     "icon": "alternate_email"
   }
 ]
