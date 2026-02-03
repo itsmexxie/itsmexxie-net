@@ -39,7 +39,7 @@ const tags = Object.entries(tagOccur)
   <div class="mb-3">
     <slot name="description"></slot>
   </div>
-  <div class="mb-3">
+  <div id="tags" class="mb-3">
     {tags.map((tag) => <Tag tagName={tag.name} postCount={tag.occur} />)}
   </div>
   <h2 class="mb-2">All posts</h2>
@@ -57,3 +57,11 @@ const tags = Object.entries(tagOccur)
     }
   </div>
 </ContentLayout>
+
+<style lang="scss">
+  #tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+</style>

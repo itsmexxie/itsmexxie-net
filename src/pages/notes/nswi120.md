@@ -4,7 +4,6 @@ title: "[WIP] NSWI120 - Principy počítačů"
 description: ""
 tags:
 - mff
-- nprg120
 dates:
   publish: 17-01-2026
 ---

@@ -4,7 +4,6 @@ description: "Tento soupis informací jsem vytvořila během mého učení na zk
 title: "[WIP] NSWI141 - Úvod do počítačových sítí"
 tags:
 - mff
-- nswi141
 dates:
   publish: 15-12-2025
 ---
