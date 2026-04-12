@@ -3,7 +3,7 @@ layout: "../../../layouts/PostLayout.astro"
 title: "Homelab"
 description: "My homelab setup (and a rough guide on setting up a connection ~ sometime in the future)."
 dates:
-  publish: 08-10-2025
+  publish: 2025-10-08
 tags: ["homelab", "selfhosted"]
 ---
 

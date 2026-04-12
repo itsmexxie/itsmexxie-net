@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.18",
     "@catppuccin/palette": "^1.7.1",
     "@r4ai/remark-callout": "^0.6.2",
     "astro": "^5.12.8",

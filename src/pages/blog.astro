@@ -1,43 +1,24 @@
 ---
+import { getCollection } from "astro:content";
 import IndexLayout from "../layouts/IndexLayout.astro";
-import type { PostFrontmatter } from "../types";
+import MdIcon from "../components/icon/mdIcon.astro";
 
-interface RawPost {
-  frontmatter: PostFrontmatter;
-  url: string;
-}
+const posts = (await getCollection("blog")).sort((a, b) => {
+  const getLastDate = (post: {
+    data: { dates: { edited?: Date; publish: Date } };
+  }) => {
+    return (post.data.dates.edited ?? post.data.dates.publish).getTime();
+  };
 
-class Post {
-  frontmatter: PostFrontmatter;
-  url: string;
-
-  constructor(post: RawPost) {
-    this.frontmatter = post.frontmatter;
-    this.url = post.url;
-  }
-
-  tags() {
-    return this.frontmatter.tags ?? [];
-  }
-}
-
-const posts: Post[] = Object.values(
-  import.meta.glob("./blog/posts/**/*.md", { eager: true })
-)
-  .map((x) => new Post(x as RawPost))
-  .sort((p, q) => {
-    let qDateRaw = (q.frontmatter.dates.edited ?? q.frontmatter.dates.publish)
-      .split("-")
-      .map((x) => parseInt(x));
-    let qDate = new Date(qDateRaw[2], qDateRaw[1], qDateRaw[0]).getTime();
-
-    let pDateRaw = (p.frontmatter.dates.edited ?? p.frontmatter.dates.publish)
-      .split("-")
-      .map((x) => parseInt(x));
-    let pDate = new Date(pDateRaw[2], pDateRaw[1], pDateRaw[0]).getTime();
-
-    return qDate - pDate;
-  });
+  return getLastDate(b) - getLastDate(a);
+});
 ---
 
-<IndexLayout posts={posts} pageId="blog" pageTitle="Blog" />
+<IndexLayout posts={posts} rootUrl="/blog/posts/" page={{ id: "blog", title: "Blog" }}>
+  <div slot="description">
+    <p>
+      Collection of thoughts, opinions and ideas. <a href="/rss/blog.xml"
+        ><MdIcon>rss_feed</MdIcon></a>
+    </p>
+  </div>
+</IndexLayout>

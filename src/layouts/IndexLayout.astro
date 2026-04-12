@@ -1,26 +1,23 @@
 ---
-import PostComponent from "../components/blog/post.astro";
+import PostComponent from "../components/index/post.astro";
 import ContentLayout from "../layouts/ContentLayout.astro";
-import Tag from "../components/blog/tag.astro";
-import type { PostFrontmatter } from "../types";
-
-interface Post {
-  frontmatter: PostFrontmatter;
-  url: string;
-  tags: () => string[];
-}
+import Tag from "../components/index/tag.astro";
+import type { PostData, PageMeta } from "../types";
 
 interface Props {
-  posts: Post[];
-  pageId: string;
-  pageTitle: string;
+  posts: {
+    id: string;
+    data: PostData;
+  }[];
+  rootUrl: string,
+  page: PageMeta;
 }
 
-const { posts, pageId, pageTitle } = Astro.props;
+const { posts, rootUrl, page } = Astro.props;
 
 const tagOccur: { [k: string]: number } = {};
 for (const post of posts) {
-  for (const tag of post.tags()) {
+  for (const tag of post.data.tags ?? []) {
     if (!(tag in tagOccur)) {
       tagOccur[tag] = 0;
     }
@@ -35,26 +32,16 @@ const tags = Object.entries(tagOccur)
   .sort((a, b) => b.occur - a.occur);
 ---
 
-<ContentLayout pageId={pageId} pageTitle={pageTitle}>
+<ContentLayout pageId={page.id} pageTitle={page.title}>
   <div class="mb-3">
-    <slot name="description"></slot>
+    <slot name="description" />
   </div>
   <div id="tags" class="mb-3">
     {tags.map((tag) => <Tag tagName={tag.name} postCount={tag.occur} />)}
   </div>
   <h2 class="mb-2">All posts</h2>
   <div>
-    {
-      posts.map((post) => (
-        <PostComponent
-          title={post.frontmatter.title}
-          description={post.frontmatter.description}
-          dates={post.frontmatter.dates}
-          tags={post.frontmatter.tags}
-          url={post.url}
-        />
-      ))
-    }
+    {posts.map((post) => <PostComponent post={post} rootUrl={rootUrl} />)}
   </div>
 </ContentLayout>
 

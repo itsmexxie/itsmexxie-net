@@ -8,6 +8,7 @@ import remarkToc from "remark-toc";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://itsmexxie.net",
   image: {
     responsiveStyles: true,
     layout: "constrained",

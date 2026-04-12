@@ -1,4 +1,5 @@
 ---
+import { getCollection } from "astro:content";
 import MdIcon from "../components/icon/mdIcon.astro";
 import SvgIcon from "../components/icon/svgIcon.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -49,6 +50,8 @@ const languages: Language[][] = [
     },
   ],
 ];
+
+console.log(await getCollection('blog'));
 ---
 
 <BaseLayout>
@@ -61,7 +64,7 @@ const languages: Language[][] = [
           alt="Profile picture of an animated cat from a Ghibli studios movie"
         />
         <h1 class="mb-2">itsmexxie</h1>
-        <div><span class="pronouns">she/her</span> 🏳️‍🌈🏳️‍⚧️</div>
+        <div><span class="ff-mono">she/her</span> • 🏳️‍🌈🏳️‍⚧️</div>
       </div>
       <div class="about">
         <p>
@@ -107,7 +110,7 @@ const languages: Language[][] = [
         <ul>
           {
             pages.slice(1).map((x) => (
-              <li>
+              <li class="ff-mono">
                 <a href={x.link}>
                   <MdIcon classes={["me-2"]}>{x.icon}</MdIcon>{x.title}
                 </a>
@@ -115,6 +118,16 @@ const languages: Language[][] = [
             ))
           }
         </ul>
+      </div>
+      <div id="key" class="section">
+        <h5 class="heading">OpenPGP key:</h5>
+        <ul>
+          <li><MdIcon classes={["me-2"]}>key</MdIcon><span class="ff-mono">BF12 6685 4644 412A A67A A0EC 9061 466E 56E0 0318</span></li>
+        </ul>
+      </div>
+      <div class="section">
+        <h5 class="heading">RSS feeds:</h5>
+        <p class="ff-mono"><a href="/rss/blog.xml">[Blog]</a> <a href="/rss/notes.xml">[Notes]</a></p>
       </div>
     </div>
   </div>
@@ -164,12 +177,6 @@ const languages: Language[][] = [
     border: 1px dotted var(--ctp-overlay0);
   }
 
-  .pronouns {
-    margin-right: 0.5rem;
-    font-family: "SUSE Mono", sans-serif;
-    font-style: italic;
-  }
-
   .about {
     color: var(--ctp-subtext0);
   }
@@ -178,10 +185,6 @@ const languages: Language[][] = [
     display: flex;
     flex-flow: row;
     gap: 1rem;
-  }
-
-  #links li,  {
-    font-family: "SUSE Mono", sans-serif;
   }
 
   @media screen and (max-width: 960px) {

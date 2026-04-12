@@ -3,8 +3,8 @@ layout: "../../../layouts/PostLayout.astro"
 title: "Transitioning"
 description: My journey and a few resources surrounding being trans (MTF focused).
 dates:
-  publish: 16-11-2025
-  edited: 12-12-2025
+  publish: 2025-11-16
+  edited: 2025-12-12
 ---
 
 # Acceptance

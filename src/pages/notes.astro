@@ -1,48 +1,22 @@
 ---
+import { getCollection } from "astro:content";
 import IndexLayout from "../layouts/IndexLayout.astro";
-import type { PostFrontmatter } from "../types";
 
-interface RawNote {
-  frontmatter: PostFrontmatter;
-  url: string;
-}
+const notes = (await getCollection("notes")).sort((a, b) => {
+  const getLastDate = (note: {
+    data: { dates: { edited?: Date; publish: Date } };
+  }) => {
+    return (note.data.dates.edited ?? note.data.dates.publish).getTime();
+  };
 
-class Note {
-  frontmatter: PostFrontmatter;
-  url: string;
-
-  constructor(post: RawNote) {
-    this.frontmatter = post.frontmatter;
-    this.url = post.url;
-  }
-
-  tags() {
-    return this.frontmatter.tags ?? [];
-  }
-}
-
-const notes: Note[] = Object.values(
-  import.meta.glob("./notes/*.md", { eager: true })
-)
-  .map((x) => new Note(x as RawNote))
-  .sort((p, q) => {
-    let qDateRaw = (q.frontmatter.dates.edited ?? q.frontmatter.dates.publish)
-      .split("-")
-      .map((x) => parseInt(x));
-    let qDate = new Date(qDateRaw[2], qDateRaw[1], qDateRaw[0]).getTime();
-
-    let pDateRaw = (p.frontmatter.dates.edited ?? p.frontmatter.dates.publish)
-      .split("-")
-      .map((x) => parseInt(x));
-    let pDate = new Date(pDateRaw[2], pDateRaw[1], pDateRaw[0]).getTime();
-
-    return qDate - pDate;
-  });
+  return getLastDate(b) - getLastDate(a);
+});
 ---
 
-<IndexLayout posts={notes} pageId="notes" pageTitle="Notes">
+<IndexLayout posts={notes} rootUrl="/notes/note/" page={{ id: "notes", title: "Notes" }}>
   <span slot="description">
     Pokud v poznámkách narazíte na jakékoliv nesrovnalosti, napište prosím na
-    <a href="mailto:site+notes@itsmexxie.net">site+notes@itsmexxie.net</a>.</span
+    <a href="mailto:site+notes@itsmexxie.net">site+notes@itsmexxie.net</a
+    >.</span
   >
 </IndexLayout>

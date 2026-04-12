@@ -2,7 +2,7 @@
 layout: "../../../layouts/PostLayout.astro"
 title: "Rough patches"
 dates:
-  publish: 26-10-2025
+  publish: 2025-10-26
 tags: ["life"]
 ---
 

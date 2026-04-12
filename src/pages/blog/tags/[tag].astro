@@ -1,29 +1,19 @@
 ---
 import type { GetStaticPaths } from "astro";
-import Post from "../../../components/blog/post.astro";
-import type { PostFrontmatter } from "../../../types";
-import ContentLayout from "../../../layouts/ContentLayout.astro";
+import { getCollection } from "astro:content";
+import IndexLayout from "../../../layouts/IndexLayout.astro";
 
 const { tag } = Astro.params;
 
-interface Post {
-  frontmatter: PostFrontmatter;
-  url: string;
-}
+const posts = (await getCollection("blog")).filter((post) =>
+  post.data.tags?.includes(tag),
+);
 
-const posts: Post[] = Object.values(
-  import.meta.glob("../../blog/posts/**/*.md", { eager: true })
-)
-  .map((p) => p as Post)
-  .filter((post) => post.frontmatter.tags?.includes(tag));
-
-export const getStaticPaths = (() => {
+export const getStaticPaths = (async () => {
   const tags: Set<string> = new Set();
 
-  for (const post of Object.values(
-    import.meta.glob("../../**/*.md", { eager: true })
-  ).map((p) => p as Post)) {
-    for (const tag of post.frontmatter.tags ?? []) {
+  for (const post of await getCollection("blog")) {
+    for (const tag of post.data.tags ?? []) {
       tags.add(tag);
     }
   }
@@ -37,19 +27,4 @@ export const getStaticPaths = (() => {
 }) satisfies GetStaticPaths;
 ---
 
-<ContentLayout pageId="blog" pageTitle="Blog">
-  <h2 class="mb-2">#{tag}</h2>
-  <div>
-    {
-      posts.map((post) => (
-        <Post
-          title={post.frontmatter.title}
-          description={post.frontmatter.description}
-          dates={post.frontmatter.dates}
-          tags={post.frontmatter.tags}
-          url={post.url}
-        />
-      ))
-    }
-  </div>
-</ContentLayout>
+<IndexLayout posts={posts} page={{ id: "blog", title: `#${tag}` }} />

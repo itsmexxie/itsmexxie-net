@@ -1,24 +1,26 @@
 ---
 import ContentLayout from "./ContentLayout.astro";
-import type { PostFrontmatter } from "../types";
+import type { PostData } from "../types"
 
 interface Props {
-  frontmatter: PostFrontmatter;
-  headings: { depth: number, slug: string, text: string }[];
+  post: {
+    id: string,
+    data: PostData
+  }
 }
 
-const { frontmatter, headings } = Astro.props;
+const { post } = Astro.props;
 const { pathname } = Astro.url;
 ---
 
-<ContentLayout pageId={pathname.split("/")[1]} pageTitle={frontmatter.title}>
+<ContentLayout pageId={pathname.split("/")[1]} pageTitle={post.data.title}>
   <div class="mb-3">
-    <div class="desc">{frontmatter.description}</div>
+    <div class="desc">{post.data.description}</div>
     <div class="meta mb-3">
       {
-        frontmatter.tags ? (
+        post.data.tags ? (
           <div class="tags">
-            {(frontmatter.tags ?? []).map((tag) => (
+            {(post.data.tags ?? []).map((tag: string) => (
               <span class="tag">#{tag}</span>
             ))}
           </div>
@@ -28,10 +30,10 @@ const { pathname } = Astro.url;
       }
       <div class="date">
         {
-          frontmatter.dates.edited ? (
-            <div>last edited {frontmatter.dates.edited}</div>
-            <div>(originally published {frontmatter.dates.publish})</div>
-          ) : frontmatter.dates.publish
+          post.data.dates.edited ? (
+            <div>last edited {post.data.dates.edited.toLocaleDateString("cs")}</div>
+            <div>(originally published {post.data.dates.publish.toLocaleDateString("cs")})</div>
+          ) : post.data.dates.publish.toLocaleDateString("cs")
         }
       </div>
     </div>

@@ -4,8 +4,9 @@ title: "[WIP] NMAI057 - Lineární algebra 1"
 description: ""
 tags:
 - mff
+- 24-25-zs
 dates:
-  publish: 14-01-2026
+  publish: 2026-01-14
 ---
 
 > [!alert]

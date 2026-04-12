@@ -4,8 +4,9 @@ title: "[WIP] NSWI120 - Principy počítačů"
 description: ""
 tags:
 - mff
+- 24-25-zs
 dates:
-  publish: 17-01-2026
+  publish: 2026-01-17
 ---
 
 # Contents

@@ -4,8 +4,9 @@ description: ""
 title: "NDBI025 - Databázové systémy"
 tags:
 - mff
+- 24-25-zs
 dates:
-  publish: 03-01-2026
+  publish: 2026-01-03
 ---
 
 # Contents

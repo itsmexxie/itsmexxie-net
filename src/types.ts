@@ -1,13 +1,17 @@
-interface PostFrontmatter {
-  title: string,
-  description: string,
+interface PostData {
+  layout: string;
+  title: string;
+  description?: string;
   dates: {
-    publish: string,
-    edited?: string
-  },
-  tags?: string[]
+    publish: Date;
+    edited?: Date;
+  };
+  tags?: string[];
 }
 
-export type {
-  PostFrontmatter
+interface PageMeta {
+  id: string,
+  title: string
 }
+
+export type { PostData, PageMeta };
