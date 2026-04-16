@@ -19,7 +19,7 @@
     "title": "School notes",
     "icon": "school"
   },
-  { "id": "music", "link": "/music", "title": "Music", "icon": "album" },
+  { "id": "media", "link": "/media", "title": "Media", "icon": "album" },
   {
     "id": "contacts",
     "link": "/contacts",
