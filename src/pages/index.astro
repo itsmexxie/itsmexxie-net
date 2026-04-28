@@ -55,8 +55,6 @@ const languages: Language[][] = [
     },
   ],
 ];
-
-console.log(await getCollection("blog"));
 ---
 
 <BaseLayout>
@@ -116,6 +114,7 @@ console.log(await getCollection("blog"));
           {
             pages.slice(1).map((x) => (
               <li class="ff-mono">
+                {/* prettier-ignore */}
                 <a href={x.link}>
                   <MdIcon classes={["me-2"]}>{x.icon}</MdIcon>{x.title}
                 </a>

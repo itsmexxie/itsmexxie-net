@@ -1,11 +1,18 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { getCollection } from "astro:content";
+import { CollectionEntry, getCollection } from "astro:content";
 import IndexLayout from "../../../layouts/IndexLayout.astro";
+import { PublishedPost } from "../../../types";
 
 const { tag } = Astro.params;
 
-const posts = (await getCollection("blog")).filter((post) =>
+async function getPublishedPosts(): Promise<PublishedPost[]> {
+  return (await getCollection("blog")).filter(
+    (p: CollectionEntry<"blog">) => p.data.dates,
+  ) as PublishedPost[];
+}
+
+const posts = (await getPublishedPosts()).filter((post) =>
   post.data.tags?.includes(tag),
 );
 
@@ -27,4 +34,8 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 ---
 
-<IndexLayout posts={posts} page={{ id: "blog", title: `#${tag}` }} />
+<IndexLayout
+  posts={posts}
+  rootUrl="/blog"
+  page={{ id: "blog", title: `#${tag}` }}
+/>

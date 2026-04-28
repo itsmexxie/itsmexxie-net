@@ -1,19 +1,16 @@
 ---
-import type { PostData } from "../../types";
+import type { PublishedNote, PublishedPost } from "../../types";
 
 interface Props {
-  post: {
-    id: string;
-    data: PostData;
-  };
-  rootUrl: string
+  post: PublishedPost | PublishedNote;
+  rootUrl: string;
 }
 
 const { post, rootUrl } = Astro.props;
 ---
 
 <div class="card post">
-  <a href={rootUrl + post.id}
+  <a href={`${rootUrl}/post/${post.id}`}
     ><div class="mb-3">
       <h3>{post.data.title}</h3>
       <div class="desc">{post.data.description}</div>

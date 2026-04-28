@@ -5,7 +5,9 @@ import MdIcon from "../components/icon/mdIcon.astro";
 import type { PublishedPost } from "../types";
 
 async function getPublishedPosts(): Promise<PublishedPost[]> {
-  return (await getCollection("blog")).filter(p => p.data.dates) as PublishedPost[];
+  return (await getCollection("blog")).filter(
+    (p) => p.data.dates,
+  ) as PublishedPost[];
 }
 
 const posts = (await getPublishedPosts()).sort((a, b) => {
@@ -17,11 +19,12 @@ const posts = (await getPublishedPosts()).sort((a, b) => {
 });
 ---
 
-<IndexLayout posts={posts} rootUrl="/blog/" page={{ id: "blog", title: "Blog" }}>
+<IndexLayout posts={posts} rootUrl="/blog" page={{ id: "blog", title: "Blog" }}>
   <div slot="description">
     <p>
       Collection of thoughts, opinions and ideas. <a href="/rss/blog.xml"
-        ><MdIcon>rss_feed</MdIcon></a>
+        ><MdIcon>rss_feed</MdIcon></a
+      >
     </p>
   </div>
 </IndexLayout>

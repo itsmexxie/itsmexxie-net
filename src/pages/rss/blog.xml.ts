@@ -26,7 +26,7 @@ export const GET = (async (context) => {
       title: p.data.title,
       description: p.data.description ?? "No description provided",
       pubDate: new Date(p.data.dates.publish),
-      link: `/blog/${p.id}/`,
+      link: `/blog/post/${p.id}/`,
     })),
   });
 }) satisfies APIRoute;

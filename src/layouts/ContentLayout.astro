@@ -19,15 +19,15 @@ interface Props {
 
 let { pageId, pageTitle, fullscreen: fullscreen = false } = Astro.props;
 if (!pageTitle) {
-  pageTitle = pageTitle ?? pages.find((p: any) => p.id == pageId)?.title ?? ""
+  pageTitle = pageTitle ?? pages.find((p: any) => p.id == pageId)?.title ?? "";
 }
 ---
 
 <BaseLayout pageTitle={pageTitle}>
   <Navbar activePage={pageId} />
   <div class="content-wrapper">
-    <div class:list={["content", { "fullscreen": fullscreen }]}>
-      <slot name="before-header"></slot>
+    <div class:list={["content", { fullscreen: fullscreen }]}>
+      <slot name="before-header" />
       <h1 class="mb-3">{pageTitle}</h1>
       <slot />
     </div>

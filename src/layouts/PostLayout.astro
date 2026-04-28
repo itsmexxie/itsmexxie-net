@@ -1,12 +1,12 @@
 ---
 import ContentLayout from "./ContentLayout.astro";
-import type { PostData } from "../types"
+import type { PostData } from "../types";
 
 interface Props {
   post: {
-    id: string,
-    data: PostData
-  }
+    id: string;
+    data: PostData;
+  };
 }
 
 const { post } = Astro.props;
@@ -32,37 +32,59 @@ const { pathname } = Astro.url;
         {
           post.data.dates ? (
             post.data.dates.edited ? (
-              <div>last edited {post.data.dates.edited.toLocaleDateString("cs")}</div>
-              <div>(originally published {post.data.dates.publish.toLocaleDateString("cs")})</div>
-            ) : post.data.dates.publish.toLocaleDateString("cs")
-          ) : "Not published yet"
+              <>
+                <div>
+                  last edited {post.data.dates.edited.toLocaleDateString("cs")}
+                </div>
+                <div>
+                  (originally published{" "}
+                  {post.data.dates.publish.toLocaleDateString("cs")})
+                </div>
+              </>
+            ) : (
+              post.data.dates.publish.toLocaleDateString("cs")
+            )
+          ) : (
+            "Not published yet"
+          )
         }
       </div>
     </div>
   </div>
-  <hr class="mb-3">
+  <hr class="mb-3" />
   <div class="post-content">
-    <slot></slot>
+    <slot />
   </div>
 </ContentLayout>
 
 <script>
   window.addEventListener("load", () => {
-    let state: {[index: string]: boolean} = {};
-    document.querySelectorAll<HTMLElement>("[data-target-answer]").forEach((btn) => {
-      btn.addEventListener("mousedown", (e) => {
-        if (!btn.dataset.targetAnswer) {
-          return;
-        }
+    let state: { [index: string]: boolean } = {};
+    document
+      .querySelectorAll<HTMLElement>("[data-target-answer]")
+      .forEach((btn) => {
+        btn.addEventListener("mousedown", (e) => {
+          if (!btn.dataset.targetAnswer) {
+            return;
+          }
 
-        if (!state[btn.dataset.targetAnswer]) {
-          state[btn.dataset.targetAnswer] = false;
-        }
+          if (!state[btn.dataset.targetAnswer]) {
+            state[btn.dataset.targetAnswer] = false;
+          }
 
-        state[btn.dataset.targetAnswer] = !state[btn.dataset.targetAnswer];
-        document.querySelectorAll<HTMLElement>(`[data-answer='${btn.dataset.targetAnswer}'`).forEach((ans) => ans.style.display = state[btn.dataset.targetAnswer] ? 'inline' : 'none');
+          state[btn.dataset.targetAnswer] = !state[btn.dataset.targetAnswer];
+          document
+            .querySelectorAll<HTMLElement>(
+              `[data-answer='${btn.dataset.targetAnswer}'`,
+            )
+            .forEach(
+              (ans) =>
+                (ans.style.display = state[btn.dataset.targetAnswer]
+                  ? "inline"
+                  : "none"),
+            );
+        });
       });
-    });
   });
 </script>
 
@@ -73,7 +95,7 @@ const { pathname } = Astro.url;
 
   .desc {
     margin-bottom: 0.5rem;
-    font-style: italic
+    font-style: italic;
   }
 
   .meta {

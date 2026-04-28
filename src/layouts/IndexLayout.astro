@@ -2,14 +2,11 @@
 import PostComponent from "../components/index/post.astro";
 import ContentLayout from "../layouts/ContentLayout.astro";
 import Tag from "../components/index/tag.astro";
-import type { PostData, PageMeta } from "../types";
+import type { PageMeta, PublishedNote, PublishedPost } from "../types";
 
 interface Props {
-  posts: {
-    id: string;
-    data: PostData;
-  }[];
-  rootUrl: string,
+  posts: PublishedPost[] | PublishedNote[];
+  rootUrl: string;
   page: PageMeta;
 }
 
@@ -37,7 +34,7 @@ const tags = Object.entries(tagOccur)
     <slot name="description" />
   </div>
   <div id="tags" class="mb-3">
-    {tags.map((tag) => <Tag tagName={tag.name} postCount={tag.occur} />)}
+    {tags.map((tag) => <Tag tagName={tag.name} postCount={tag.occur} rootUrl={rootUrl} />)}
   </div>
   <h2 class="mb-2">All posts</h2>
   <div>

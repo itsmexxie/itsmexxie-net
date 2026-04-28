@@ -21,7 +21,9 @@ const { activePage } = Astro.props;
             {
               active: activePage === x.link.replace(/^\//, ""),
             },
-          ]}>
+          ]}
+        >
+          {/* prettier-ignore */}
           <a href={x.link}>
             <MdIcon classes={["me-2"]}>{x.icon}</MdIcon>{x.title}
           </a>
