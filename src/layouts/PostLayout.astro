@@ -30,10 +30,12 @@ const { pathname } = Astro.url;
       }
       <div class="date">
         {
-          post.data.dates.edited ? (
-            <div>last edited {post.data.dates.edited.toLocaleDateString("cs")}</div>
-            <div>(originally published {post.data.dates.publish.toLocaleDateString("cs")})</div>
-          ) : post.data.dates.publish.toLocaleDateString("cs")
+          post.data.dates ? (
+            post.data.dates.edited ? (
+              <div>last edited {post.data.dates.edited.toLocaleDateString("cs")}</div>
+              <div>(originally published {post.data.dates.publish.toLocaleDateString("cs")})</div>
+            ) : post.data.dates.publish.toLocaleDateString("cs")
+          ) : "Not published yet"
         }
       </div>
     </div>

@@ -1,12 +1,17 @@
 import type { APIRoute } from "astro";
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
+import type { PublishedPost } from "../../types";
+
+async function getPublishedPosts(): Promise<PublishedPost[]> {
+  return (await getCollection("blog")).filter(
+    (p) => p.data.dates,
+  ) as PublishedPost[];
+}
 
 export const GET = (async (context) => {
-  const posts = (await getCollection("blog")).sort((a, b) => {
-    const getLastDate = (post: {
-      data: { dates: { edited?: Date; publish: Date } };
-    }) => {
+  const posts = (await getPublishedPosts()).sort((a, b) => {
+    const getLastDate = (post: PublishedPost) => {
       return (post.data.dates.edited ?? post.data.dates.publish).getTime();
     };
 
@@ -21,7 +26,7 @@ export const GET = (async (context) => {
       title: p.data.title,
       description: p.data.description ?? "No description provided",
       pubDate: new Date(p.data.dates.publish),
-      link: `/blog/posts/${p.id}/`,
+      link: `/blog/${p.id}/`,
     })),
   });
 }) satisfies APIRoute;

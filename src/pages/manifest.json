@@ -7,12 +7,7 @@
     "title": "Projects",
     "icon": "construction"
   },
-  {
-    "id": "recipes",
-    "link": "/recipes",
-    "title": "Recipes",
-    "icon": "skillet"
-  },
+
   {
     "id": "notes",
     "link": "/notes",
@@ -20,6 +15,12 @@
     "icon": "school"
   },
   { "id": "media", "link": "/media", "title": "Media", "icon": "album" },
+  {
+    "id": "recipes",
+    "link": "/recipes",
+    "title": "Recipes",
+    "icon": "skillet"
+  },
   {
     "id": "contacts",
     "link": "/contacts",

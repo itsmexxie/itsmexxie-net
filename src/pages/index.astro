@@ -20,29 +20,34 @@ const languages: Language[][] = [
       classes: ["rust"],
     },
     {
+      desc: "whenever I need to write a simple one-off script, I always reach for python (mainly due to my laziness)",
+      icon: "python",
+      classes: ["python"],
+    },
+  ],
+  [
+    {
       desc: "i hate segfaults",
       icon: "cplusplus",
       classes: ["cpp"],
     },
     {
-      desc: "I'm still learning this one, so I can't say more about it at the moment!",
-      icon: "zig",
-      classes: ["zig"],
-    },
-  ],
-  [
-    {
-      desc: "whenever I need to write a simple one-off script, I always reach for python (mainly due to my laziness)",
-      icon: "python",
-      classes: ["python"],
+      desc: "I did a few projects with this, can't say I enjoy it but it's alright.",
+      icon: "dotnet",
+      classes: ["dotnet"],
     },
     {
-      desc: "I'm still learning this one, so I can't say more about it at the moment!",
+      desc: "Always found it cool, but never could quite wrap my head around its model...",
       icon: "go",
       classes: ["go"],
     },
   ],
   [
+    {
+      desc: "I'm still learning this one, so I can't say more about it at the moment!",
+      icon: "zig",
+      classes: ["zig"],
+    },
     {
       desc: "I have no idea how this works, but I would be glad to talk about it with you if you're willing to teach me! :)",
       icon: "haskell",
@@ -51,7 +56,7 @@ const languages: Language[][] = [
   ],
 ];
 
-console.log(await getCollection('blog'));
+console.log(await getCollection("blog"));
 ---
 
 <BaseLayout>
@@ -122,12 +127,19 @@ console.log(await getCollection('blog'));
       <div id="key" class="section">
         <h5 class="heading">OpenPGP key:</h5>
         <ul>
-          <li><MdIcon classes={["me-2"]}>key</MdIcon><span class="ff-mono">BF12 6685 4644 412A A67A A0EC 9061 466E 56E0 0318</span></li>
+          <li>
+            <MdIcon classes={["me-2"]}>key</MdIcon><span class="ff-mono"
+              >BF12 6685 4644 412A A67A A0EC 9061 466E 56E0 0318</span
+            >
+          </li>
         </ul>
       </div>
       <div class="section">
         <h5 class="heading">RSS feeds:</h5>
-        <p class="ff-mono"><a href="/rss/blog.xml">[Blog]</a> <a href="/rss/notes.xml">[Notes]</a></p>
+        <p class="ff-mono">
+          <a href="/rss/blog.xml">[Blog]</a>
+          <a href="/rss/notes.xml">[Notes]</a>
+        </p>
       </div>
     </div>
   </div>

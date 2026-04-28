@@ -5,8 +5,6 @@ description: ""
 tags:
 - mff
 - 24-25-zs
-dates:
-  publish: 2026-01-14
 ---
 
 > [!alert]

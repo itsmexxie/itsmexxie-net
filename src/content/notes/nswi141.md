@@ -1,12 +1,10 @@
 ---
 layout: "../../layouts/PostLayout.astro"
-description: "Tento soupis informací jsem vytvořila během mého učení na zkoušku z tohoto předmětu. Pokud se na ni zrovna učíte, doufám, že vám nějak pomůže :)."
 title: "[WIP] NSWI141 - Úvod do počítačových sítí"
+description: "Tento soupis informací jsem vytvořila během mého učení na zkoušku z tohoto předmětu. Pokud se na ni zrovna učíte, doufám, že vám nějak pomůže :)."
 tags:
 - mff
 - 24-25-zs
-dates:
-  publish: 2025-12-15
 ---
 
 # Contents

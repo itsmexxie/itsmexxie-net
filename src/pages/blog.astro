@@ -1,12 +1,15 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import IndexLayout from "../layouts/IndexLayout.astro";
 import MdIcon from "../components/icon/mdIcon.astro";
+import type { PublishedPost } from "../types";
 
-const posts = (await getCollection("blog")).sort((a, b) => {
-  const getLastDate = (post: {
-    data: { dates: { edited?: Date; publish: Date } };
-  }) => {
+async function getPublishedPosts(): Promise<PublishedPost[]> {
+  return (await getCollection("blog")).filter(p => p.data.dates) as PublishedPost[];
+}
+
+const posts = (await getPublishedPosts()).sort((a, b) => {
+  const getLastDate = (post: PublishedPost) => {
     return (post.data.dates.edited ?? post.data.dates.publish).getTime();
   };
 
@@ -14,7 +17,7 @@ const posts = (await getCollection("blog")).sort((a, b) => {
 });
 ---
 
-<IndexLayout posts={posts} rootUrl="/blog/posts/" page={{ id: "blog", title: "Blog" }}>
+<IndexLayout posts={posts} rootUrl="/blog/" page={{ id: "blog", title: "Blog" }}>
   <div slot="description">
     <p>
       Collection of thoughts, opinions and ideas. <a href="/rss/blog.xml"
