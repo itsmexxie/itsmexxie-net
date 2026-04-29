@@ -7,7 +7,7 @@ interface Tea {
   region?: string;
   flush?: number;
   price?: number;
-  rating: number;
+  rating: string;
   comment?: string;
   link?: string;
   original_label?: string;
@@ -38,7 +38,7 @@ const teas: { category: string; items: Tea[] }[] = [
         country: Country.India,
         region: "Assam",
         price: Flush.Spring,
-        rating: 2,
+        rating: "Medium, but still ok",
         comment: "Standard black tea, best used for masala or other milk teas.",
         original_label:
           'Střední třída assámského černého čaje typu broken, plná, lehce natrpklá chuť, vhodný k běžnému popíjení s mlékem a medem či k přípravě Yogi (indického "bílého" čaje).',
@@ -49,7 +49,7 @@ const teas: { category: string; items: Tea[] }[] = [
         region: "Darjeeling",
         flush: Flush.Spring,
         price: Price.High,
-        rating: 4,
+        rating: "Love it",
         comment:
           "Great black tea, fresh flavor and with hints of herbs and spices.",
       },
@@ -59,7 +59,7 @@ const teas: { category: string; items: Tea[] }[] = [
         region: "Darjeeling",
         flush: Flush.Spring,
         price: Price.High,
-        rating: 4,
+        rating: "Love it"
       },
     ],
   },
@@ -71,7 +71,7 @@ const teas: { category: string; items: Tea[] }[] = [
         country: Country.Japan,
         region: "Kagoshima, Kirishima",
         flush: Flush.Spring,
-        rating: 1,
+        rating: "Probably never again",
         comment: "These teas are probably not my thing...",
         link: "https://www.caj.cz/japan-kagoshima-kirishima-shincha-asanoka~z464-000374.html",
       },
@@ -85,26 +85,9 @@ const countries = {
 } as const;
 
 const flushes = ["Spring/Early", "Summer/Late"];
-const ratings = [
-  "🚮",
-  "Probably never again",
-  "Medium, but still fine",
-  "Would buy again",
-  "Love it",
-];
 ---
 
 <ContentLayout pageId="projects" pageTitle="Teas" fullscreen={true}>
-  <div class="mb-4">
-    <h3>Ratings legend:</h3>
-    <ul>
-      <li>⭐⭐⭐⭐⭐ - Love it</li>
-      <li>⭐⭐⭐⭐ - Would buy again</li>
-      <li>⭐⭐⭐ - Depends on the day</li>
-      <li>⭐⭐ - Never again</li>
-      <li>⭐ - 🚮</li>
-    </ul>
-  </div>
   {
     teas.map((t) => (
       <div class="mb-4">
@@ -149,7 +132,7 @@ const ratings = [
                   <td>{tea.region}</td>
                   <td>{tea.flush === undefined ? "-" : flushes[tea.flush]}</td>
                   <td>{tea.price ? "💲".repeat(tea.price + 1) : "-"}</td>
-                  <td>{ratings[tea.rating]}</td>
+                  <td>{tea.rating}</td>
                   <td>
                     <i>{tea.comment ?? "No comment"}</i>
                   </td>
